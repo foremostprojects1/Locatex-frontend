@@ -1,0 +1,685 @@
+<!DOCTYPE html>
+<html lang="zxx">
+<head>
+    <title>Housy - Real Estate HTML5 Template</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="utf-8">
+
+    <!-- External CSS libraries -->
+    <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="css/animate.min.css">
+    <link rel="stylesheet" type="text/css" href="css/bootstrap-submenu.css">
+    <link rel="stylesheet" type="text/css" href="css/bootstrap-select.min.css">
+    <link rel="stylesheet" href="css/leaflet.css" type="text/css">
+    <link rel="stylesheet" href="css/map.css" type="text/css">
+    <link rel="stylesheet" type="text/css" href="fonts/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="fonts/flaticon/font/flaticon.css">
+    <link rel="stylesheet" type="text/css" href="fonts/linearicons/style.css">
+    <link rel="stylesheet" type="text/css"  href="css/jquery.mCustomScrollbar.css">
+    <link rel="stylesheet" type="text/css"  href="css/dropzone.css">
+    <link rel="stylesheet" type="text/css"  href="css/slick.css">
+
+    <!-- Custom stylesheet -->
+    <link rel="stylesheet" type="text/css" href="css/style.css">
+    <link rel="stylesheet" type="text/css" id="style_sheet" href="css/skins/default.css">
+    <style>
+        .role-badge {
+            display: inline-block;
+            padding: 6px 12px;
+            border-radius: 999px;
+            font-size: 12px;
+            font-weight: 600;
+            letter-spacing: .3px;
+        }
+        .role-user { background: #e9ecef; color: #495057; border: 1px solid #dee2e6; }
+        .role-agent { background: #e7f5ff; color: #1c7ed6; border: 1px solid #d0ebff; }
+        .role-admin { background: #f3d9fa; color: #862e9c; border: 1px solid #e5dbff; }
+    </style>
+
+    <!-- Favicon icon -->
+    <link rel="shortcut icon" href="img/favicon.ico" type="image/x-icon" >
+
+    <!-- Google fonts -->
+    <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700%7CRoboto:300,400,500,700&display=swap">
+
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <link rel="stylesheet" type="text/css" href="css/ie10-viewport-bug-workaround.css">
+
+    <!-- Just for debugging purposes. Don't actually copy these 2 lines! -->
+    <!--[if lt IE 9]><script src="js/ie8-responsive-file-warning.js"></script><![endif]-->
+    <script src="js/ie-emulation-modes-warning.js"></script>
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+    <script src="js/html5shiv.min.js"></script>
+    <script src="js/respond.min.js"></script>
+    <![endif]-->
+</head>
+<body>
+<div class="page_loader"></div>
+
+<!-- Header Include -->
+<div id="header-container"></div>
+
+<script>
+    // Load header.html content
+    fetch('header.html')
+        .then(response => response.text())
+        .then(data => {
+            document.getElementById('header-container').innerHTML = data;
+        })
+        .catch(error => {
+            console.error('Error loading header:', error);
+        });
+</script>
+
+<!-- Sub banner start -->
+<div class="sub-banner">
+    <div class="container">
+        <div class="page-name">
+            <h1>My Profile</h1>
+            <ul>
+                <li><a href="index.html">Index</a></li>
+                <li><span>/</span>My Profile</li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<!-- My profile start -->
+<div class="my-profile content-area">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-4 col-md-12 col-sm-12">
+                <div class="clearfix">
+                    <!-- Avatar start -->
+                    <div class="edit-profile-photo">
+                        <img id="avatarImg" src="img/avatar/avatar-11.png" alt="profile-photo" class="img-fluid">
+                        <div class="change-photo-btn">
+                            <div class="photoUpload">
+                                <span><i class="fa fa-upload"></i> Upload Photo</span>
+                                <input type="file" id="avatarInput" class="upload" accept="image/*">
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Avatar end -->
+                    <!-- My account box start -->
+                    <div class="my-account-box">
+                        <ul>
+                            <li>
+                                <a href="my-profile.html" class="active">
+                                    <i class="flaticon-people"></i>My Profile
+                                </a>
+                            </li>
+                            <li id="adminDashboardLi" style="display: none;">
+                                <a href="admin-dashboard.html">
+                                    <img src="img/administrator.png" alt="Admin Dashboard" style="width: 16px; height: 16px; margin-right: 8px; vertical-align: middle;">Admin Dashboard
+                                </a>
+                            </li>
+                            <li>
+                                <a href="favorited-properties.html">
+                                    <i class="flaticon-favorite"></i>Favorited Properties
+                                </a>
+                            </li>
+                            <li>
+                                <a href="my-properties.html">
+                                    <i class="flaticon-internet"></i>My Properties
+                                </a>
+                            </li>
+                            <li>
+                                <a href="submit-property.html">
+                                    <i class="flaticon-cross"></i>Submit New Property
+                                </a>
+                            </li>
+                            <li>
+                                <a href="change-password.html">
+                                    <i class="flaticon-lock"></i>Change Password
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#" onclick="logout()">
+                                    <i class="flaticon-exit"></i>Log Out
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                    <!-- My account box end -->
+                </div>
+            </div>
+            <div class="col-lg-8 col-md-12 col-sm-12">
+                <!-- My address start-->
+                <div class="my-address">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div>
+                            <h3 class="heading-2 mb-1">My Account</h3>
+                            <div id="userRoleBadge" class="role-badge role-user">User</div>
+                        </div>
+                        <div>
+                            <button id="editBtn" class="btn btn-sm button-theme" type="button">Edit Details</button>
+                            <button id="saveBtn" class="btn btn-sm button-theme" type="button" style="display:none;">Save Changes</button>
+                            <button id="cancelBtn" class="btn btn-sm btn-secondary" type="button" style="display:none;">Cancel</button>
+                        </div>
+                    </div>
+
+                    <form id="profileForm" action="#" method="POST" class="mt-3">
+                        <div class="form-group">
+                            <label>Name</label>
+                            <input type="text" class="input-text" id="name" name="name" placeholder="Your full name" required disabled>
+                        </div>
+                        <div class="form-group" id="phoneField">
+                            <label>Phone</label>
+                            <input type="text" class="input-text" id="phone" name="phone" placeholder="Phone number" required disabled>
+                        </div>
+                        <div class="form-group" id="emailField">
+                            <label>Email</label>
+                            <input type="email" class="input-text" id="email" name="email" placeholder="Email" required disabled>
+                        </div>
+                        <small class="text-muted" id="noteField">Email cannot be changed.</small>
+                    </form>
+                </div>
+                <!-- My address end -->
+
+                <!-- Messages Section
+                <div class="messages-section" id="messagesSection" style="display: none;">
+                    <div class="d-flex justify-content-between align-items-center mb-4">
+                        <div>
+                            <button onclick="showProfileSection()" class="btn btn-sm btn-outline-secondary me-3">
+                                <i class="fa fa-arrow-left"></i> Back to Profile
+                            </button>
+                            <h3 class="heading-2 mb-1 d-inline">My Messages</h3>
+                            <p class="text-muted">View your contact messages and admin replies</p>
+                        </div>
+                        <div>
+                            <button onclick="refreshMessages()" class="btn btn-sm button-theme">
+                                <i class="fa fa-refresh"></i> Refresh
+                            </button>
+                        </div>
+                    </div>
+
+                    <div id="messagesContainer">
+                        <div class="text-center p-5">
+                            <div class="spinner-border text-primary" role="status">
+                                <span class="visually-hidden">Loading messages...</span>
+                            </div>
+                            <p class="mt-2">Loading your messages...</p>
+                        </div>
+                    </div> -->
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Footer start -->
+<div id="footer-container"></div>
+
+<script>
+    // Load footer.html content
+    fetch('footer.html')
+        .then(response => response.text())
+        .then(data => {
+            document.getElementById('footer-container').innerHTML = data;
+        })
+        .catch(error => {
+            console.error('Error loading footer:', error);
+        });
+</script>
+
+<script src="js/jquery-2.2.0.min.js"></script>
+<script src="js/popper.min.js"></script>
+<script src="js/bootstrap.min.js"></script>
+<script src="js/bootstrap-submenu.js"></script>
+<script src="js/rangeslider.js"></script>
+<script src="js/jquery.mb.YTPlayer.js"></script>
+<script src="js/wow.min.js"></script>
+<script src="js/bootstrap-select.min.js"></script>
+<script src="js/jquery.easing.1.3.js"></script>
+<script src="js/jquery.scrollUp.js"></script>
+<script src="js/jquery.mCustomScrollbar.concat.min.js"></script>
+<script src="js/leaflet.js"></script>
+<script src="js/leaflet-providers.js"></script>
+<script src="js/leaflet.markercluster.js"></script>
+<script src="js/dropzone.js"></script>
+<script src="js/slick.min.js"></script>
+<script src="js/jquery.filterizr.js"></script>
+<script src="js/jquery.magnific-popup.min.js"></script>
+<script src="js/jquery.countdown.js"></script>
+<script src="js/maps.js"></script>
+<script src="js/app.js"></script>
+
+<script>
+// Global logout function (accessible from HTML onclick) - Now uses modal
+function logout() {
+    $('#logoutModal').modal('show');
+}
+
+// Handle logout confirmation from modal - Using event delegation
+document.addEventListener('click', function(e) {
+    if (e.target && e.target.id === 'confirmLogoutBtn') {
+        localStorage.removeItem('auth_token');
+        localStorage.removeItem('token');
+        localStorage.removeItem('current_user');
+        localStorage.removeItem('profile_complete');
+
+        // Try to refresh header auth status if function exists
+        if (window.refreshAuthStatus) {
+            window.refreshAuthStatus();
+        }
+
+        // Close modal and redirect
+        $('#logoutModal').modal('hide');
+        window.location.href = 'index.html';
+    }
+});
+
+    (function() {
+        var API_BASE_URL = 'http://localhost:5000';
+        var token = null;
+        var currentUser = null;
+
+        function getToken() {
+            try { return localStorage.getItem('auth_token'); } catch (e) { return null; }
+        }
+
+        function setCurrentUser(user) {
+            try { localStorage.setItem('current_user', JSON.stringify(user)); } catch (e) {}
+        }
+
+        function getCurrentUser() {
+            try { return JSON.parse(localStorage.getItem('current_user') || 'null'); } catch (e) { return null; }
+        }
+
+        function setProfileCompleteFlag() {
+            try { localStorage.setItem('profile_complete', 'true'); } catch (e) {}
+        }
+
+        function isProfileComplete(user) {
+            return !!(user && user.name && user.phone);
+        }
+        
+        function showEditMode(on) {
+            var name = document.getElementById('name');
+            var phone = document.getElementById('phone');
+            var email = document.getElementById('email');
+            var editBtn = document.getElementById('editBtn');
+            var saveBtn = document.getElementById('saveBtn');
+            var cancelBtn = document.getElementById('cancelBtn');
+            var phoneField = document.getElementById('phoneField');
+            var emailField = document.getElementById('emailField');
+
+            name.disabled = !on;
+
+            if (phoneField.style.display !== 'none') {
+                phone.disabled = !on;
+                email.disabled = true;
+            } else if (emailField.style.display !== 'none') {
+                email.disabled = true; // Keep email disabled
+                phone.disabled = true;
+            }
+
+            editBtn.style.display = on ? 'none' : '';
+            saveBtn.style.display = on ? '' : 'none';
+            cancelBtn.style.display = on ? '' : 'none';
+        }
+
+        function populateForm(user) {
+            document.getElementById('name').value = user && user.name ? user.name : '';
+            var phoneField = document.getElementById('phoneField');
+            var emailField = document.getElementById('emailField');
+            var noteField = document.getElementById('noteField');
+
+            if (user && user.phone) {
+                document.getElementById('phone').value = user.phone;
+                phoneField.style.display = 'block';
+                emailField.style.display = 'none';
+                noteField.textContent = 'Phone number cannot be changed.';
+            } else if (user && user.email) {
+                document.getElementById('email').value = user.email;
+                phoneField.style.display = 'none';
+                emailField.style.display = 'block';
+                noteField.textContent = 'Email cannot be changed.';
+            } else {
+                phoneField.style.display = 'none';
+                emailField.style.display = 'none';
+                noteField.textContent = '';
+            }
+        }
+
+        function setAvatarFromUser(user) {
+            var avatarImgEl = document.getElementById('avatarImg');
+            if (!avatarImgEl) return;
+            if (user && user.avatar) {
+                avatarImgEl.src = user.avatar;
+            } else {
+                avatarImgEl.src = 'img/avatar/avatar-11.png';
+            }
+        }
+
+        function setRoleBadge(user){
+            var el = document.getElementById('userRoleBadge');
+            if(!el) return;
+            var role = (user && user.role) ? user.role.toLowerCase() : 'user';
+            var label = role.charAt(0).toUpperCase() + role.slice(1);
+            el.textContent = label;
+            el.classList.remove('role-user','role-agent','role-admin');
+            if(role === 'admin') el.classList.add('role-admin');
+            else if(role === 'agent') el.classList.add('role-agent');
+            else el.classList.add('role-user');
+
+            // Show/hide Admin Dashboard button based on role
+            var adminDashboardLi = document.getElementById('adminDashboardLi');
+            if(adminDashboardLi) {
+                adminDashboardLi.style.display = (role === 'admin') ? 'block' : 'none';
+            }
+        }
+
+        function openProfileModalIfNeeded(user) {
+            var complete = isProfileComplete(user);
+            if (complete) { setProfileCompleteFlag(); return; }
+
+            // Create a simple modal
+            var modal = document.createElement('div');
+            modal.id = 'profileModal';
+            modal.style.position = 'fixed';
+            modal.style.top = '0';
+            modal.style.left = '0';
+            modal.style.right = '0';
+            modal.style.bottom = '0';
+            modal.style.background = 'rgba(0,0,0,0.5)';
+            modal.style.zIndex = '1050';
+
+            var box = document.createElement('div');
+            box.style.maxWidth = '520px';
+            box.style.margin = '10% auto';
+            box.style.background = '#fff';
+            box.style.borderRadius = '6px';
+            box.style.padding = '24px';
+            box.style.boxShadow = '0 10px 30px rgba(0,0,0,0.2)';
+
+            box.innerHTML = '<h4 style="margin-bottom:8px;">Complete Your Profile</h4>' +
+                '<p style="margin-bottom:16px;">Please complete your profile to continue using your account. All fields are required.</p>' +
+                '<div style="text-align:right;">' +
+                '  <button id="goEditBtn" class="btn button-theme">Go to Edit Profile</button>' +
+                '</div>';
+
+            modal.appendChild(box);
+            document.body.appendChild(modal);
+
+            document.getElementById('goEditBtn').addEventListener('click', function() {
+                showEditMode(true);
+                document.body.removeChild(modal);
+            });
+        }
+
+        function fetchMe() {
+            return fetch(API_BASE_URL + '/api/auth/me', {
+                headers: { 'Authorization': 'Bearer ' + token }
+            }).then(function(res) { return res.json(); })
+            .then(function(json) {
+                if (json && json.data && json.data.user) { return json.data.user; }
+                throw new Error('Failed to load profile');
+            });
+        }
+
+        function saveProfile(payload) {
+            return fetch(API_BASE_URL + '/api/auth/profile', {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': 'Bearer ' + token
+                },
+                body: JSON.stringify(payload)
+            }).then(function(res) { return res.json().then(function(body){ return { status: res.status, body: body }; }); });
+        }
+
+        // init
+        token = getToken();
+        if (!token) {
+            window.location.href = 'login.html';
+            return;
+        }
+
+        currentUser = getCurrentUser();
+        if (currentUser) { populateForm(currentUser); setAvatarFromUser(currentUser); setRoleBadge(currentUser); }
+        showEditMode(false);
+
+        // load fresh from backend
+        fetchMe().then(function(user) {
+            currentUser = user;
+            populateForm(user);
+            setAvatarFromUser(user);
+            setRoleBadge(user);
+            setCurrentUser(user);
+            openProfileModalIfNeeded(user);
+        }).catch(function(err){ console.error(err); });
+
+        // button handlers
+        document.getElementById('editBtn').addEventListener('click', function(){ showEditMode(true); });
+        document.getElementById('cancelBtn').addEventListener('click', function(){ populateForm(currentUser || {}); showEditMode(false); });
+        document.getElementById('saveBtn').addEventListener('click', function(){
+            var name = (document.getElementById('name').value || '').trim();
+            var phone = (document.getElementById('phone').value || '').trim();
+            var phoneField = document.getElementById('phoneField');
+            var payload = { name: name };
+
+            if (phoneField.style.display !== 'none') {
+                payload.phone = phone;
+            }
+
+            if (!name || (phoneField.style.display !== 'none' && !phone)) { alert('Please complete all required fields.'); return; }
+
+            saveProfile(payload).then(function(result){
+                if (result.status === 200 && result.body && result.body.data && result.body.data.user) {
+                    currentUser = result.body.data.user;
+                    setCurrentUser(currentUser);
+                    populateForm(currentUser);
+                    showEditMode(false);
+                    if (isProfileComplete(currentUser)) { setProfileCompleteFlag(); }
+                    alert('Profile updated successfully.');
+                } else {
+                    var message = (result.body && (result.body.message || (result.body.errors && JSON.stringify(result.body.errors)))) || 'Update failed.';
+                    alert(message);
+                }
+            }).catch(function(err){
+                console.error('Update failed', err);
+                alert('Unable to update profile at the moment.');
+            });
+        });
+
+        // avatar upload
+        var avatarInput = document.getElementById('avatarInput');
+        var avatarImg = document.getElementById('avatarImg');
+        if (avatarInput) {
+            avatarInput.addEventListener('change', function() {
+                var file = avatarInput.files && avatarInput.files[0];
+                if (!file) return;
+                if (!file.type || file.type.indexOf('image/') !== 0) { alert('Please choose an image file.'); return; }
+                if (file.size > 5 * 1024 * 1024) { alert('Image must be under 5MB.'); return; }
+
+                var previewUrl = URL.createObjectURL(file);
+                avatarImg.src = previewUrl;
+
+                var formData = new FormData();
+                formData.append('avatar', file);
+
+                fetch(API_BASE_URL + '/api/auth/avatar', {
+                    method: 'POST',
+                    headers: { 'Authorization': 'Bearer ' + token },
+                    body: formData
+                })
+                .then(function(res){ return res.json().then(function(body){ return { status: res.status, body: body }; }); })
+                .then(function(result){
+                    if (result.status === 200 && result.body && result.body.data && result.body.data.user) {
+                        currentUser = result.body.data.user;
+                        setCurrentUser(currentUser);
+                        if (currentUser.avatar) { avatarImg.src = currentUser.avatar; }
+                        alert('Profile photo updated.');
+                    } else {
+                        alert((result.body && result.body.message) || 'Upload failed.');
+                    }
+                })
+                .catch(function(err){
+                    console.error('Avatar upload failed:', err);
+                    alert('Unable to upload photo now.');
+                });
+            });
+        }
+
+        function showMessagesSection() {
+            // Hide profile section
+            document.querySelector('.my-address').style.display = 'none';
+            // Show messages section
+            document.getElementById('messagesSection').style.display = 'block';
+            // Update active navigation
+            document.querySelectorAll('.my-account-box a').forEach(function(link) {
+                link.classList.remove('active');
+            });
+            document.querySelector('a[href="my-profile.html"]').nextElementSibling.nextElementSibling.classList.add('active');
+
+            // Load messages
+            loadUserMessages();
+        }
+
+        function showProfileSection() {
+            // Hide messages section
+            document.getElementById('messagesSection').style.display = 'none';
+            // Show profile section
+            document.querySelector('.my-address').style.display = 'block';
+            // Update active navigation
+            document.querySelectorAll('.my-account-box a').forEach(function(link) {
+                link.classList.remove('active');
+            });
+            document.querySelector('a[href="my-profile.html"]').classList.add('active');
+        }
+
+        function loadUserMessages() {
+            var container = document.getElementById('messagesContainer');
+            container.innerHTML = '<div class="text-center p-5"><div class="spinner-border text-primary" role="status"><span class="visually-hidden">Loading messages...</span></div><p class="mt-2">Loading your messages...</p></div>';
+
+            fetch(API_BASE_URL + '/api/contact/my-messages', {
+                headers: { 'Authorization': 'Bearer ' + token }
+            })
+            .then(function(res) { return res.json(); })
+            .then(function(json) {
+                if (json && json.status === 'success' && json.data) {
+                    displayUserMessages(json.data);
+                } else {
+                    container.innerHTML = '<div class="text-center p-5"><div class="alert alert-info"><i class="fa fa-info-circle"></i> No messages found. When you contact us, your messages will appear here.</div></div>';
+                }
+            })
+            .catch(function(err) {
+                console.error('Error loading messages:', err);
+                container.innerHTML = '<div class="text-center p-5"><div class="alert alert-danger"><i class="fa fa-exclamation-triangle"></i> Error loading messages. Please try again.</div></div>';
+            });
+        }
+
+        function displayUserMessages(messages) {
+            var container = document.getElementById('messagesContainer');
+
+            if (!messages || messages.length === 0) {
+                container.innerHTML = '<div class="text-center p-5"><div class="alert alert-info"><i class="fa fa-info-circle"></i> No messages found. When you contact us, your messages will appear here.</div></div>';
+                return;
+            }
+
+            var html = '';
+            messages.forEach(function(message) {
+                html += createMessageCard(message);
+            });
+
+            container.innerHTML = html;
+        }
+
+        function createMessageCard(message) {
+            var statusClass = 'info';
+            var statusIcon = 'fa-info-circle';
+
+            if (message.status === 'replied') {
+                statusClass = 'success';
+                statusIcon = 'fa-reply';
+            } else if (message.status === 'closed') {
+                statusClass = 'secondary';
+                statusIcon = 'fa-check-circle';
+            }
+
+            var repliedSection = '';
+            if (message.response) {
+                repliedSection = `
+                    <div class="admin-reply mt-3 p-3 bg-light rounded">
+                        <div class="d-flex align-items-center mb-2">
+                            <i class="fa fa-reply text-primary me-2"></i>
+                            <strong>Admin Reply</strong>
+                            <small class="text-muted ms-auto">${new Date(message.response.respondedAt).toLocaleString()}</small>
+                        </div>
+                        <p class="mb-0">${message.response.message}</p>
+                    </div>
+                `;
+            }
+
+            return `
+                <div class="message-card mb-4 border rounded p-3">
+                    <div class="message-header d-flex justify-content-between align-items-start mb-3">
+                        <div>
+                            <h5 class="mb-1">${message.subject}</h5>
+                            <small class="text-muted">Sent on ${new Date(message.createdAt).toLocaleString()}</small>
+                        </div>
+                        <span class="badge bg-${statusClass}">
+                            <i class="fa ${statusIcon} me-1"></i>
+                            ${message.status.charAt(0).toUpperCase() + message.status.slice(1)}
+                        </span>
+                    </div>
+
+                    <div class="message-content">
+                        <p class="mb-3">${message.message}</p>
+                        ${repliedSection}
+                    </div>
+
+                    <div class="message-footer mt-3 pt-3 border-top">
+                        <div class="row text-muted small">
+                            <div class="col-md-4">
+                                <i class="fa fa-tag me-1"></i> ${message.type.replace('_', ' ').toUpperCase()}
+                            </div>
+                            <div class="col-md-4">
+                                <i class="fa fa-exclamation-circle me-1"></i> ${message.priority.toUpperCase()}
+                            </div>
+                            <div class="col-md-4 text-end">
+                                ${message.isRead ? '<i class="fa fa-eye me-1"></i> Read' : '<i class="fa fa-envelope me-1"></i> Unread'}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        function refreshMessages() {
+            if (document.getElementById('messagesSection').style.display !== 'none') {
+                loadUserMessages();
+            }
+        }
+    })();
+</script>
+
+<!-- Logout Confirmation Modal -->
+<div id="logoutModal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Confirm Logout</h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <p>Are you sure you want to logout from your account?</p>
+                <p class="text-muted">You will need to login again to access your account.</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-primary" id="confirmLogoutBtn">Logout</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+<script src="js/ie10-viewport-bug-workaround.js"></script>
+
+</body>
+</html>

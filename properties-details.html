@@ -1,0 +1,1594 @@
+<!DOCTYPE html>
+<html lang="zxx">
+<head>
+    <title>Housy - Real Estate HTML5 Template</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="utf-8">
+
+    <!-- External CSS libraries -->
+    <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="css/animate.min.css">
+    <link rel="stylesheet" type="text/css" href="css/bootstrap-submenu.css">
+    <link rel="stylesheet" type="text/css" href="css/bootstrap-select.min.css">
+    <link rel="stylesheet" href="css/leaflet.css" type="text/css">
+    <link rel="stylesheet" href="css/map.css" type="text/css">
+    <link rel="stylesheet" type="text/css" href="fonts/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="fonts/flaticon/font/flaticon.css">
+    <link rel="stylesheet" type="text/css" href="fonts/linearicons/style.css">
+    <link rel="stylesheet" type="text/css"  href="css/jquery.mCustomScrollbar.css">
+    <link rel="stylesheet" type="text/css"  href="css/dropzone.css">
+    <link rel="stylesheet" type="text/css"  href="css/slick.css">
+
+    <!-- Custom stylesheet -->
+    <link rel="stylesheet" type="text/css" href="css/style.css">
+    <link rel="stylesheet" type="text/css" id="style_sheet" href="css/skins/default.css">
+
+    <!-- Favicon icon -->
+    <link rel="shortcut icon" href="img/favicon.ico" type="image/x-icon" >
+
+    <!-- Google fonts -->
+    <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700%7CRoboto:300,400,500,700&display=swap">
+
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <link rel="stylesheet" type="text/css" href="css/ie10-viewport-bug-workaround.css">
+
+    <!-- Just for debugging purposes. Don't actually copy these 2 lines! -->
+    <!--[if lt IE 9]><script src="js/ie8-responsive-file-warning.js"></script><![endif]-->
+    <script src="js/ie-emulation-modes-warning.js"></script>
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+    <script src="js/html5shiv.min.js"></script>
+    <script src="js/respond.min.js"></script>
+    <![endif]-->
+</head>
+<body>
+<div class="page_loader"></div>
+
+<!-- Header Include -->
+<div id="header-container"></div>
+
+<script>
+    // Load header.html content
+    fetch('header.html')
+        .then(response => response.text())
+        .then(data => {
+            document.getElementById('header-container').innerHTML = data;
+        })
+        .catch(error => {
+            console.error('Error loading header:', error);
+        });
+</script>
+
+<!-- Sub banner start -->
+<div class="sub-banner">
+    <div class="container">
+        <div class="page-name">
+            <h1>Properties Detail</h1>
+            <ul>
+                <li><a href="index.html">Index</a></li>
+                <li><span>/</span>Properties Detail</li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<!-- Properties Details page start -->
+<div class="properties-details-page content-area-7">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-md-12 col-xs-12">
+                <div class="properties-details-section">
+                    <div class="mb-30">
+                        <div class="heading-properties-2 pd-header">
+                            <div class="row align-items-center">
+                                <div class="col-md-8">
+                                    <h3 id="propTitle" class="pd-title">Property</h3>
+                                    <p class="pd-location"><i class="fa fa-map-marker"></i> <span id="propAddress">Location</span></p>
+                                </div>
+                                <div class="col-md-4 text-md-right text-left">
+                                    <h3 class="pd-price" id="propPrice"></h3>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="property-gallery-wrap">
+                            <div class="property-gallery-slider" id="propGallerySlider"></div>
+                            <div class="property-gallery-thumbs" id="propGalleryThumbs"></div>
+                        </div>
+                    </div>
+                    <!-- Advanced search start -->
+                    <div class="widget-2 sidebar advanced-search-2">
+                        <h3 class="sidebar-title">Advanced Search</h3>
+                        <div class="s-border"></div>
+                        <div class="m-border"></div>
+                        <form method="GET">
+                            <div class="form-group">
+                                <select class="selectpicker search-fields" name="property-sdtatus">
+                                    <option>Property Status</option>
+                                    <option>For Sale</option>
+                                    <option>For Rent</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <select class="selectpicker search-fields" name="property-type">
+                                    <option>Property Type</option>
+                                    <option>Apartments</option>
+                                    <option>Houses</option>
+                                    <option>Commercial</option>
+                                    <option>Garages</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <select class="selectpicker search-fields" name="commercial">
+                                    <option>Commercial</option>
+                                    <option>Residential</option>
+                                    <option>Land</option>
+                                    <option>Hotels</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <select class="selectpicker search-fields" name="location">
+                                    <option>location</option>
+                                    <option>New York</option>
+                                    <option>Bangladesh</option>
+                                    <option>India</option>
+                                    <option>Canada</option>
+                                </select>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-6">
+                                    <div class="form-group">
+                                        <select class="selectpicker search-fields" name="bedrooms">
+                                            <option>Bedrooms</option>
+                                            <option>1</option>
+                                            <option>2</option>
+                                            <option>3</option>
+                                            <option>4</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="form-group">
+                                        <select class="selectpicker search-fields" name="bathroom">
+                                            <option>Bathroom</option>
+                                            <option>1</option>
+                                            <option>2</option>
+                                            <option>3</option>
+                                            <option>4</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-6">
+                                    <div class="form-group">
+                                        <select class="selectpicker search-fields" name="balcony">
+                                            <option>Balcony</option>
+                                            <option>1</option>
+                                            <option>2</option>
+                                            <option>3</option>
+                                            <option>4</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="form-group">
+                                        <select class="selectpicker search-fields" name="garage">
+                                            <option>Garage</option>
+                                            <option>1</option>
+                                            <option>2</option>
+                                            <option>3</option>
+                                            <option>4</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="range-slider">
+                                <label>Area</label>
+                                <div data-min="0" data-max="10000" data-min-name="min_area" data-max-name="max_area" data-unit="Sq ft" class="range-slider-ui ui-slider" aria-disabled="false"></div>
+                                <div class="clearfix"></div>
+                            </div>
+                            <div class="range-slider">
+                                <label>Price</label>
+                                <div data-min="0" data-max="150000"  data-min-name="min_price" data-max-name="max_price" data-unit="USD" class="range-slider-ui ui-slider" aria-disabled="false"></div>
+                                <div class="clearfix"></div>
+                            </div>
+                            <div class="form-group mb-0">
+                                <button class="search-button">Search</button>
+                            </div>
+                        </form>
+                    </div>
+                    <!-- Tabbing box start -->
+                    <div class="tabbing tabbing-box tb-2 mb-40">
+                        <ul class="nav nav-tabs" id="carTab" role="tablist">
+                            <li class="nav-item">
+                                <a class="nav-link active show" id="one-tab" data-toggle="tab" href="#one" role="tab" aria-controls="one" aria-selected="false">Description</a>
+                            </li>
+                            <!-- <li class="nav-item">
+                                <a class="nav-link" id="two-tab" data-toggle="tab" href="#two" role="tab" aria-controls="two" aria-selected="false">Floor Plans</a>
+                            </li> -->
+                            <li class="nav-item">
+                                <a class="nav-link" id="three-tab" data-toggle="tab" href="#three" role="tab" aria-controls="three" aria-selected="true">Details</a>
+                            </li>
+                            <!-- <li class="nav-item">
+                                <a class="nav-link" id="4-tab" data-toggle="tab" href="#4" role="tab" aria-controls="4" aria-selected="true">Video</a>
+                            </li> -->
+                            <li class="nav-item">
+                                <a class="nav-link" id="5-tab" data-toggle="tab" href="#5" role="tab" aria-controls="5" aria-selected="true">Location</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" id="6-tab" data-toggle="tab" href="#6" role="tab" aria-controls="6" aria-selected="true">Similar Properties</a>
+                            </li>
+                        </ul>
+                        <div class="tab-content" id="carTabContent">
+                            <div class="tab-pane fade active show" id="one" role="tabpanel" aria-labelledby="one-tab">
+                                <div class="properties-description mb-50">
+                                    <h3 class="heading-2">Description</h3>
+                                    <p id="propDescription"></p>
+                                </div>
+                            </div>
+                            <div class="tab-pane fade" id="two" role="tabpanel" aria-labelledby="two-tab">
+                                <div class="floor-plans mb-50">
+                                    <h3 class="heading-2">Floor Plans</h3>
+                                    <table>
+                                        <tbody><tr>
+                                            <td><strong>Size</strong></td>
+                                            <td><strong>Rooms</strong></td>
+                                            <td><strong>Bathrooms</strong></td>
+                                            <td><strong>Garage</strong></td>
+                                        </tr>
+                                        <tr>
+                                            <td>1600</td>
+                                            <td>3</td>
+                                            <td>2</td>
+                                            <td>1</td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                    
+                                </div>
+                            </div>
+                            <div class="tab-pane fade " id="three" role="tabpanel" aria-labelledby="three-tab">
+                                <div class="property-details mb-40">
+                                    <h3 class="heading-2">Property Details</h3>
+                                    <div class="row">
+                                        <div class="col-md-7 col-sm-6">
+                                            <ul>
+                                                <li><strong>Property Id:</strong> <span id="propId"></span></li>
+                                                <li><strong>Status:</strong> <span id="propStatus"></span></li>
+                                                <li><strong>Type:</strong> <span id="propType"></span></li>
+                                                <li><strong>Total Area:</strong> <span id="propArea"></span></li>
+                                            </ul>
+                                        </div>
+                                        <div class="col-md-5 col-sm-6">
+                                            <ul>
+                                                <li><strong>City:</strong> <span id="propCity"></span></li>
+                                                <li><strong>State:</strong> <span id="propState"></span></li>
+                                                <li><strong>Zip Code:</strong> <span id="propZip"></span></li>
+                                                <li><strong>Owner:</strong> <span id="propOwner"></span></li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="tab-pane fade " id="4" role="tabpanel" aria-labelledby="4-tab">
+                                <div class="inside-properties mb-50">
+                                    <h3 class="heading-2">
+                                        Property Video
+                                    </h3>
+                                    <iframe src="https://www.youtube.com/embed/5e0LxrLSzok" allowfullscreen=""></iframe>
+                                </div>
+                            </div>
+                            <div class="tab-pane fade " id="5" role="tabpanel" aria-labelledby="5-tab">
+                                <div class="location mb-50">
+                                    <div class="map">
+                                        <h3 class="heading-2">Property Location</h3>
+                                        <div id="contactMap" class="contact-map" style="height:400px;width:100%;"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="tab-pane fade " id="6" role="tabpanel" aria-labelledby="6-tab">
+                                <div class="similar-properties mb-30">
+                                    <h3 class="heading-2">Similar Properties</h3>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="property-box-3">
+                                                <div class="property-thumbnail">
+                                                    <a href="properties-details.html" class="property-img">
+                                                        <div class="tag-2">For Rent</div>
+                                                        <img class="d-block w-100" src="img/properties/properties-1.png" alt="properties">
+                                                        <div class="facilities-list">
+                                                            <ul>
+                                                                <li>
+                                                                    <i class="flaticon-square"></i> 4800 sq ft
+                                                                </li>
+                                                                <li>
+                                                                    <i class="flaticon-furniture"></i> 3 Beds
+                                                                </li>
+                                                                <li>
+                                                                    <i class="flaticon-holidays"></i> 2 Baths
+                                                                </li>
+                                                            </ul>
+                                                        </div>
+                                                    </a>
+                                                </div>
+                                                <div class="details">
+                                                    <div class="top">
+                                                        <h1 class="title">
+                                                            <a href="properties-details.html">Masons Villas</a>
+                                                            <span>$850.00</span>
+                                                        </h1>
+                                                        <div class="location">
+                                                            <a href="properties-details.html" tabindex="0">
+                                                                <i class="fa fa-map-marker"></i>123 Kathal St. Tampa City
+                                                            </a>
+                                                        </div>
+                                                    </div>
+                                                    <div class="footer clearfix">
+                                                        <div class="pull-left days">
+                                                            <p><i class="flaticon-time"></i> 5 Days ago</p>
+                                                        </div>
+                                                        <ul class="pull-right">
+                                                            <li><a href="#" tabindex="0"><i class="flaticon-favorite"></i></a></li>
+                                                            <li><a href="#" tabindex="0"><i class="flaticon-multimedia"></i></a></li>
+                                                        </ul>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="property-box-3">
+                                                <div class="property-thumbnail">
+                                                    <a href="properties-details.html" class="property-img">
+                                                        <div class="tag-2 bg-active">For Sale</div>
+                                                        <img class="d-block w-100" src="img/properties/properties-3.png" alt="properties">
+                                                        <div class="facilities-list">
+                                                            <ul>
+                                                                <li>
+                                                                    <i class="flaticon-square"></i> 4800 sq ft
+                                                                </li>
+                                                                <li>
+                                                                    <i class="flaticon-furniture"></i> 3 Beds
+                                                                </li>
+                                                                <li>
+                                                                    <i class="flaticon-holidays"></i> 2 Baths
+                                                                </li>
+                                                            </ul>
+                                                        </div>
+                                                    </a>
+                                                </div>
+                                                <div class="details">
+                                                    <div class="top">
+                                                        <h1 class="title">
+                                                            <a href="properties-details.html">Beautiful Single Home</a>
+                                                            <span>$750.00</span>
+                                                        </h1>
+                                                        <div class="location">
+                                                            <a href="properties-details.html" tabindex="0">
+                                                                <i class="fa fa-map-marker"></i>123 Kathal St. Tampa City
+                                                            </a>
+                                                        </div>
+                                                    </div>
+                                                    <div class="footer clearfix">
+                                                        <div class="pull-left days">
+                                                            <p><i class="flaticon-time"></i> 5 Days ago</p>
+                                                        </div>
+                                                        <ul class="pull-right">
+                                                            <li><a href="#" tabindex="0"><i class="flaticon-favorite"></i></a></li>
+                                                            <li><a href="#" tabindex="0"><i class="flaticon-multimedia"></i></a></li>
+                                                        </ul>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Properties condition start -->
+                    <div class="properties-condition mb-40" id="dynamicCondition" style="display:none;">
+                        <h3 class="heading-2">Configuration</h3>
+                        <div class="row">
+                            <div class="col-md-4 col-sm-4 col-xs-12">
+                                <ul class="condition">
+                                    <li><i class="flaticon-furniture"></i><span id="condBedrooms"></span> Bedroom(s)</li>
+                                    <li><i class="flaticon-holidays"></i><span id="condBathrooms"></span> Bathroom(s)</li>
+                                </ul>
+                            </div>
+                            <div class="col-md-4 col-sm-4 col-xs-12">
+                                <ul class="condition">
+                                    <li><i class="flaticon-window"></i><span id="condBalconies"></span> Balcony(ies)</li>
+                                    <li><i class="flaticon-square"></i><span id="condHall"></span></li>
+                                </ul>
+                            </div>
+                            <div class="col-md-4 col-sm-4 col-xs-12">
+                                <ul class="condition">
+                                    <li><i class="fa fa-cutlery"></i><span id="condKitchen"></span></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Properties amenities start -->
+                    <!-- <div class="properties-amenities mb-40">
+                        <h3 class="heading-2">
+                            Features
+                        </h3>
+                        <div class="row">
+                            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                                <ul class="amenities">
+                                    <li>
+                                        <i class="flaticon-technology"></i>Air conditioning
+                                    </li>
+                                    <li>
+                                        <i class="flaticon-window"></i>Balcony
+                                    </li>
+                                    <li>
+                                        <i class="flaticon-beach"></i>Pool
+                                    </li>
+                                    <li>
+                                        <i class="flaticon-holidays-1"></i>Room service
+                                    </li>
+                                    <li>
+                                        <i class="flaticon-people-2"></i>Gym
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                                <ul class="amenities">
+                                    <li>
+                                        <i class="flaticon-connection"></i>Wifi
+                                    </li>
+                                    <li>
+                                        <i class="flaticon-vehicle"></i>Parking
+                                    </li>
+                                    <li>
+                                        <i class="flaticon-furniture"></i>Double Bed
+                                    </li>
+                                    <li>
+                                        <i class="flaticon-comedy"></i>Home Theater
+                                    </li>
+                                    <li>
+                                        <i class="flaticon-technology-3"></i>Electric
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                                <ul class="amenities">
+                                    <li>
+                                        <i class="flaticon-technology-1"></i>Telephone
+                                    </li>
+                                    <li>
+                                        <i class="flaticon-people-3"></i>Jacuzzi
+                                    </li>
+                                    <li>
+                                        <i class="flaticon-clock"></i>Alarm
+                                    </li>
+                                    <li>
+                                        <i class="flaticon-vehicle"></i>Garage
+                                    </li>
+                                    <li>
+                                        <i class="flaticon-lock"></i>Security
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div> -->
+                    
+                    <!-- Contact 1 start -->
+                    <div class="contact-1 mtb-50">
+                        <h3 class="heading">Contact Form</h3>
+                        <form action="#" method="GET" enctype="multipart/form-data">
+                            <div class="row">
+                                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                                    <div class="form-group name">
+                                        <input type="text" name="name" class="form-control" placeholder="Name">
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                                    <div class="form-group email">
+                                        <input type="email" name="email" class="form-control" placeholder="Email">
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                                    <div class="form-group subject">
+                                        <input type="text" name="subject" class="form-control" placeholder="Subject">
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                                    <div class="form-group number">
+                                        <input type="text" name="phone" class="form-control" placeholder="Number">
+                                    </div>
+                                </div>
+                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                    <div class="form-group message">
+                                        <textarea class="form-control" name="message" placeholder="Write message"></textarea>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 col-md-12">
+                                    <div class="send-btn">
+                                        <button type="submit" class="btn btn-md button-theme">Send Message</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-12">
+                <div class="sidebar-right">
+                    <!-- Advanced search start -->
+                    <!-- <div class="sidebar widget advanced-search none-992">
+                        <h3 class="sidebar-title">Advanced Search</h3>
+                        <div class="s-border"></div>
+                        <div class="m-border"></div>
+                        <form method="GET">
+                            <div class="form-group">
+                                <select class="selectpicker search-fields" name="property-sdtatus">
+                                    <option>Property Status</option>
+                                    <option>For Sale</option>
+                                    <option>For Rent</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <select class="selectpicker search-fields" name="property-type">
+                                    <option>Property Type</option>
+                                    <option>Apartments</option>
+                                    <option>Houses</option>
+                                    <option>Commercial</option>
+                                    <option>Garages</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <select class="selectpicker search-fields" name="commercial">
+                                    <option>Commercial</option>
+                                    <option>Residential</option>
+                                    <option>Land</option>
+                                    <option>Hotels</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <select class="selectpicker search-fields" name="location">
+                                    <option>location</option>
+                                    <option>New York</option>
+                                    <option>Bangladesh</option>
+                                    <option>India</option>
+                                    <option>Canada</option>
+                                </select>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-6">
+                                    <div class="form-group">
+                                        <select class="selectpicker search-fields" name="bedrooms">
+                                            <option>Bedrooms</option>
+                                            <option>1</option>
+                                            <option>2</option>
+                                            <option>3</option>
+                                            <option>4</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="form-group">
+                                        <select class="selectpicker search-fields" name="bathroom">
+                                            <option>Bathroom</option>
+                                            <option>1</option>
+                                            <option>2</option>
+                                            <option>3</option>
+                                            <option>4</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-6">
+                                    <div class="form-group">
+                                        <select class="selectpicker search-fields" name="balcony">
+                                            <option>Balcony</option>
+                                            <option>1</option>
+                                            <option>2</option>
+                                            <option>3</option>
+                                            <option>4</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="form-group">
+                                        <select class="selectpicker search-fields" name="garage">
+                                            <option>Garage</option>
+                                            <option>1</option>
+                                            <option>2</option>
+                                            <option>3</option>
+                                            <option>4</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="range-slider">
+                                <label>Area</label>
+                                <div data-min="0" data-max="10000" data-min-name="min_area" data-max-name="max_area" data-unit="Sq ft" class="range-slider-ui ui-slider" aria-disabled="false"></div>
+                                <div class="clearfix"></div>
+                            </div>
+                            <div class="range-slider">
+                                <label>Price</label>
+                                <div data-min="0" data-max="150000"  data-min-name="min_price" data-max-name="max_price" data-unit="USD" class="range-slider-ui ui-slider" aria-disabled="false"></div>
+                                <div class="clearfix"></div>
+                            </div>
+                            <div class="form-group mb-0">
+                                <button class="search-button">Search</button>
+                            </div>
+                        </form>
+                    </div> -->
+                    <!-- Posts by category start -->
+                    <!-- <div class="posts-by-category widget">
+                        <h3 class="sidebar-title">Category</h3>
+                        <div class="s-border"></div>
+                        <div class="m-border"></div>
+                        <ul class="list-unstyled list-cat">
+                            <li><a href="#">Single Family <span>(45)</span></a></li>
+                            <li><a href="#">Apartment <span>(21)</span> </a></li>
+                            <li><a href="#">Condo <span>(23)</span></a></li>
+                            <li><a href="#">Multi Family <span>(19)</span></a></li>
+                            <li><a href="#">Villa <span>(19)</span></a> </li>
+                            <li><a href="#">Other <span>(22) </span></a></li>
+                        </ul>
+                    </div> -->
+                    <!-- Social media box start -->
+                    <!-- <div class="social-media-box widget clearfix">
+                        <h3 class="sidebar-title">Social Media</h3>
+                        <div class="s-border"></div>
+                        <div class="m-border"></div>
+                        <ul class="social-list">
+                            <li>
+                                <a href="#" class="facebook-bg">
+                                    <i class="fa fa-facebook"></i>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#" class="twitter-bg">
+                                    <i class="fa fa-twitter"></i>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#" class="google-bg">
+                                    <i class="fa fa-google"></i>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#" class="linkedin-bg">
+                                    <i class="fa fa-linkedin"></i>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#" class="pinterest-bg">
+                                    <i class="fa fa-pinterest"></i>
+                                </a>
+                            </li>
+                        </ul>
+                    </div> -->
+                    <!-- Financing calculator start -->
+                    <div class="contact-1 financing-calculator widget">
+                        <h5 class="sidebar-title">Mortgage Calculator</h5>
+                        <div class="s-border"></div>
+                        <div class="m-border"></div>
+                        <form action="#" method="GET" enctype="multipart/form-data">
+                            <div class="form-group">
+                                <label class="form-label">Property Price</label>
+                                <input type="text" class="form-control" id="propertyPrice" placeholder="₹50,00,000" value="">
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Interest Rate (%)</label>
+                                <input type="text" class="form-control" id="interestRate" placeholder="8.5%" value="">
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Loan Period</label>
+                                <input type="text" class="form-control" id="loanPeriod" placeholder="20 Years" value="">
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Down Payment</label>
+                                <input type="text" class="form-control" id="downPayment" placeholder="₹10,00,000" value="">
+                            </div>
+
+                            <div class="form-group mb-0">
+                                <button type="button" class="btn button-theme btn-md btn-block" onclick="calculateMortgage()">Calculate EMI</button>
+                            </div>
+                        </form>
+                        <div id="mortgageResults" style="display: none; margin-top: 20px; padding: 15px; background: #f8f9fa; border-radius: 5px;">
+                            <div class="row">
+                                <div class="col-12">
+                                    <div class="text-center mb-4">
+                                        <h5 class="text-primary">Loan Summary</h5>
+                                    </div>
+
+                                    <!-- EMI Row -->
+                                    <div class="row summary-row mb-3">
+                                        <div class="col-7">
+                                            <h6 class="text-muted mb-0">Monthly EMI Is</h6>
+                                        </div>
+                                        <div class="col-5 text-right">
+                                            <h4 class="text-success mb-0">₹<span id="monthlyEMI">-</span></h4>
+                                        </div>
+                                    </div>
+
+                                    <!-- Interest Row -->
+                                    <div class="row summary-row mb-3">
+                                        <div class="col-7">
+                                            <h6 class="text-muted mb-0">Interest Component</h6>
+                                        </div>
+                                        <div class="col-5 text-right">
+                                            <h4 class="text-warning mb-0">₹<span id="totalInterest">-</span></h4>
+                                        </div>
+                                    </div>
+
+                                    <!-- Total Row -->
+                                    <div class="row summary-row">
+                                        <div class="col-7">
+                                            <h6 class="text-muted mb-0">Total Amount Payable Is</h6>
+                                        </div>
+                                        <div class="col-5 text-right">
+                                            <h4 class="text-info mb-0">₹<span id="totalAmount">-</span></h4>
+                                        </div>
+                                    </div>
+
+                                    <div class="mt-4">
+                                        <h6 class="text-center text-muted">Principal vs Interest Breakdown</h6>
+                                        <canvas id="breakdownChart" width="300" height="200"></canvas>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Financing calculator end -->
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Footer start -->
+<div id="footer-container"></div>
+
+<script>
+    // Load footer.html content
+    fetch('footer.html')
+        .then(response => response.text())
+        .then(data => {
+            document.getElementById('footer-container').innerHTML = data;
+        })
+        .catch(error => {
+            console.error('Error loading footer:', error);
+        });
+</script>
+
+<script src="js/jquery-2.2.0.min.js"></script>
+<script src="js/popper.min.js"></script>
+<script src="js/bootstrap.min.js"></script>
+<script src="js/bootstrap-submenu.js"></script>
+<script src="js/rangeslider.js"></script>
+<script src="js/jquery.mb.YTPlayer.js"></script>
+<script src="js/wow.min.js"></script>
+<script src="js/bootstrap-select.min.js"></script>
+<script src="js/jquery.easing.1.3.js"></script>
+<script src="js/jquery.scrollUp.js"></script>
+<script src="js/jquery.mCustomScrollbar.concat.min.js"></script>
+<script src="js/leaflet.js"></script>
+<script src="js/leaflet-providers.js"></script>
+<script src="js/leaflet.markercluster.js"></script>
+<script src="js/dropzone.js"></script>
+<script src="js/slick.min.js"></script>
+<script src="js/jquery.filterizr.js"></script>
+<script src="js/jquery.magnific-popup.min.js"></script>
+<script src="js/jquery.countdown.js"></script>
+<script src="js/maps.js"></script>
+<script src="js/app.js"></script>
+
+<!-- Google Maps API -->
+<!-- Replace YOUR_GOOGLE_MAPS_API_KEY with your actual Google Maps API key -->
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyASvsUsXr5DtzDSLKvk5Tzc439i8k3fOfM&libraries=places"></script>
+
+<script>
+(function(){
+    var API_BASE = 'http://localhost:5000';
+    function qs(name){
+        var params = new URLSearchParams(window.location.search);
+        return params.get(name);
+    }
+    function setText(id, val){ var el=document.getElementById(id); if(el) el.textContent = val || ''; }
+    function formatCurrency(n){
+        if(!n && n !== 0) return '';
+        try { return '₹ ' + Number(n).toLocaleString(); } catch(e) { return n; }
+    }
+
+    function renderImages(images){
+        var slider = document.getElementById('propGallerySlider');
+        var thumbs = document.getElementById('propGalleryThumbs');
+        if(!slider || !thumbs) return;
+        slider.innerHTML = '';
+        thumbs.innerHTML = '';
+        var list = (images && images.length) ? images : [{ url: 'img/dummy-property.png', alt: 'Property' }];
+        list.forEach(function(img, idx){
+            var s = document.createElement('div');
+            s.className = 'pg-slide';
+            s.innerHTML = '<img src="' + img.url + '" alt="slide">';
+            slider.appendChild(s);
+
+            var t = document.createElement('div');
+            t.className = 'pg-thumb' + (idx===0?' active':'');
+            t.innerHTML = '<img src="' + img.url + '" alt="thumb">';
+            t.addEventListener('click', function(){
+                slider.scrollTo({ left: slider.clientWidth * idx, behavior: 'smooth' });
+                Array.prototype.forEach.call(thumbs.children, function(ch){ ch.classList.remove('active'); });
+                t.classList.add('active');
+            });
+            thumbs.appendChild(t);
+        });
+    }
+
+    function initMap(lat, lng, address){
+        try {
+            var latitude = Number(lat);
+            var longitude = Number(lng);
+
+            // ✅ Validate ranges
+            if (!isFinite(latitude) || !isFinite(longitude) || latitude < -90 || latitude > 90 || longitude < -180 || longitude > 180) {
+                console.warn('Invalid coordinates, defaulting to Ahmedabad');
+                latitude = 23.0229652;
+                longitude = 72.6544334;
+                address = address || 'Ahmedabad, Gujarat';
+            }
+
+            var loc = { lat: latitude, lng: longitude };
+            var mapContainer = document.getElementById('contactMap');
+            if(!mapContainer){ console.error('Map container not found'); return; }
+            mapContainer.innerHTML = '';
+
+            var map = new google.maps.Map(mapContainer, {
+                zoom: 16,
+                center: loc,
+                mapTypeId: google.maps.MapTypeId.ROADMAP,
+                mapTypeControl: true,
+                streetViewControl: true,
+                fullscreenControl: true,
+                zoomControl: true,
+                gestureHandling: 'greedy'
+            });
+
+            var marker = new google.maps.Marker({
+                position: loc,
+                map: map,
+                title: 'Property Location',
+                animation: google.maps.Animation.DROP
+            });
+
+            // ✅ Show dynamic property address
+            var infoWindow = new google.maps.InfoWindow({
+                content: `<div style="padding:10px;"><strong>Property Location</strong><br>${address || 'Location not available'}</div>`
+            });
+
+            marker.addListener('click', function() {
+                infoWindow.open(map, marker);
+            });
+
+            console.log('✅ Map initialized with:', loc, 'Address:', address);
+
+        } catch(e) {
+            console.error('Map initialization error:', e);
+        }
+    }
+
+    function load(){
+        var id = qs('id');
+        if(!id){ return; }
+        fetch(API_BASE + '/api/properties/' + id)
+            .then(function(r){ return r.json(); })
+            .then(function(data){
+                if(!data || data.status !== 'success' || !data.data || !data.data.property) return;
+                var p = data.data.property;
+                setText('propTitle', p.title);
+                setText('propPrice', formatCurrency(p.price));
+                setText('propAddress', (p.location && (p.location.address || '')) + (p.location && p.location.city ? ', ' + p.location.city : ''));
+                setText('propDescription', p.description || '');
+                setText('propId', p._id);
+                setText('propStatus', p.status);
+                setText('propType', p.type);
+                setText('propBhk', p.bhk || '-');
+                setText('propArea', p.totalArea ? (p.totalArea + ' SqFt') : '-');
+                setText('propParking', p.carParking || '-');
+                setText('propAge', p.buildingAge || '-');
+                setText('propZip', p.location && p.location.zipCode || '');
+                setText('propCity', p.location && p.location.city || '');
+                setText('propState', p.location && p.location.state || '');
+                setText('propApproval', p.approvalStatus || 'pending');
+                setText('propOwner', (p.owner && p.owner.name) || '');
+                renderImages(p.images);
+                var lat = p.location && p.location.coordinates && p.location.coordinates.latitude;
+                var lng = p.location && p.location.coordinates && p.location.coordinates.longitude;
+
+                // Handle MongoDB data format for coordinates
+                if (lat && typeof lat === 'object' && lat.$numberDouble) {
+                    lat = lat.$numberDouble;
+                }
+                if (lng && typeof lng === 'object' && lng.$numberDouble) {
+                    lng = lng.$numberDouble;
+                }
+
+                console.log('Raw coordinates from DB:', { lat, lng });
+                console.log('Coordinate types:', typeof lat, typeof lng);
+
+                var nlat = Number(lat);
+                var nlng = Number(lng);
+
+                console.log('Converted coordinates:', { nlat, nlng });
+                console.log('Are coordinates finite?', isFinite(nlat), isFinite(nlng));
+
+                if (!isFinite(nlat) || !isFinite(nlng)) {
+                    console.warn('Invalid coordinates, using defaults');
+                    nlat = lat; nlng = lng; // Let initMap handle defaults
+                } else {
+                    // If coordinates look swapped, fix them
+                    if (Math.abs(nlat) > 90 && Math.abs(nlng) <= 90) {
+                        console.warn('Coordinates appear swapped, fixing...');
+                        var tmp = nlat; nlat = nlng; nlng = tmp;
+                    }
+                }
+
+                console.log('Final coordinates for map:', { nlat, nlng });
+                console.log('Google Maps API loaded:', typeof google !== 'undefined');
+                console.log('Google Maps object:', typeof google !== 'undefined' ? google.maps : 'undefined');
+
+                var address = (p.location && p.location.address) || 'Property Location';
+
+                // ✅ Initialize map with lat, lng and dynamic address
+                initMap(nlat, nlng, address);
+
+                // Initialize map only after Google Maps API is ready
+                function safeInit(){
+                    try {
+                        console.log('Attempting to initialize map...');
+                        console.log('Map container found:', !!document.getElementById('contactMap'));
+
+                        if (typeof google === 'undefined' || !google.maps) {
+                            console.error('Google Maps API not loaded');
+                            return;
+                        }
+
+                        if (!document.getElementById('contactMap')) {
+                            console.error('Map container not found');
+                            return;
+                        }
+
+                        initMap(nlat, nlng);
+                    } catch(e){
+                        console.error('Map init failed in safeInit:', e);
+                    }
+                }
+
+                // Wait for Google Maps API and DOM to be ready
+                function waitForMapsAPI() {
+                    console.log('Checking dependencies...');
+                    console.log('- Google Maps API:', typeof google !== 'undefined' ? 'loaded' : 'not loaded');
+                    console.log('- Google Maps object:', typeof google !== 'undefined' && google.maps ? 'available' : 'not available');
+                    console.log('- Map container exists:', !!document.getElementById('contactMap'));
+
+                    if (typeof google !== 'undefined' && google.maps && document.getElementById('contactMap')) {
+                        console.log('✅ All dependencies ready, initializing map');
+                        safeInit();
+                    } else {
+                        console.log('⏳ Waiting for dependencies...');
+                        setTimeout(waitForMapsAPI, 100);
+                    }
+                }
+
+                // Start waiting for dependencies
+                waitForMapsAPI();
+
+                // Dynamic configuration from BHK
+                try {
+                    if (p.type === 'house' || p.type === 'apartment') {
+                        var bhk = Number(p.bhk || 0);
+                        var bedrooms = bhk > 0 ? bhk : (p.specifications && p.specifications.bedrooms) || '';
+                        var bathrooms = (typeof p.bathrooms !== 'undefined') ? p.bathrooms : (p.specifications && p.specifications.bathrooms);
+                        var balconies = (typeof p.balconies !== 'undefined') ? p.balconies : '';
+                        var hall = '1 Hall';
+                        var kitchen = '1 Kitchen';
+                        document.getElementById('condBedrooms').textContent = bedrooms || '-';
+                        document.getElementById('condBathrooms').textContent = (bathrooms || 1);
+                        document.getElementById('condBalconies').textContent = (typeof balconies === 'number' ? balconies : 0);
+                        document.getElementById('condHall').textContent = hall;
+                        document.getElementById('condKitchen').textContent = kitchen;
+                        document.getElementById('dynamicCondition').style.display = '';
+                    }
+                } catch(e) { console.warn('Condition block error', e); }
+            })
+            .catch(function(e){ console.error('Failed to load property', e); });
+    }
+
+    document.addEventListener('DOMContentLoaded', load);
+})();
+
+function calculateMortgage() {
+    try {
+        console.log('Calculate mortgage function called');
+
+        // Get input values
+        const propertyPriceInput = document.getElementById('propertyPrice');
+        const interestRateInput = document.getElementById('interestRate');
+        const loanPeriodInput = document.getElementById('loanPeriod');
+        const downPaymentInput = document.getElementById('downPayment');
+
+        if (!propertyPriceInput || !interestRateInput || !loanPeriodInput || !downPaymentInput) {
+            console.error('Input elements not found');
+            alert('Form elements not found. Please refresh the page.');
+            return;
+        }
+
+        const propertyPrice = parseCurrency(propertyPriceInput.value);
+        const annualInterestRate = parseFloat(interestRateInput.value.replace('%', '')) / 100; // Annual rate
+
+        // Handle loan period - could be in months or years
+        const loanPeriodText = loanPeriodInput.value.replace(' Months', '').replace(' Years', '');
+        const loanPeriodValue = parseInt(loanPeriodText);
+
+        // If the value is greater than 100, assume it's in months, otherwise years
+        const loanPeriodYears = loanPeriodValue > 100 ? loanPeriodValue / 12 : loanPeriodValue;
+
+        const downPayment = parseCurrency(downPaymentInput.value);
+
+        console.log('Parsed values:', { propertyPrice, annualInterestRate, loanPeriodYears, downPayment });
+
+        // Validation
+        if (!propertyPrice || propertyPrice <= 0) {
+            alert('Please enter a valid property price');
+            propertyPriceInput.focus();
+            return;
+        }
+        if (!annualInterestRate || annualInterestRate <= 0) {
+            alert('Please enter a valid interest rate');
+            interestRateInput.focus();
+            return;
+        }
+        if (!loanPeriodYears || loanPeriodYears <= 0) {
+            alert('Please enter a valid loan period (in months or years)');
+            loanPeriodInput.focus();
+            return;
+        }
+        if (loanPeriodYears > 50) {
+            alert('Loan period cannot exceed 50 years');
+            loanPeriodInput.focus();
+            return;
+        }
+        if (downPayment >= propertyPrice) {
+            alert('Down payment cannot be greater than or equal to property price');
+            downPaymentInput.focus();
+            return;
+        }
+
+        // Calculate loan amount
+        const loanAmount = propertyPrice - downPayment;
+        console.log('Loan amount:', loanAmount);
+
+        // Calculate monthly EMI using standard formula
+        const monthlyRate = annualInterestRate / 12;
+        const numberOfPayments = loanPeriodYears * 12;
+
+        let monthlyEMI = 0;
+        if (monthlyRate > 0) {
+            monthlyEMI = loanAmount * (monthlyRate * Math.pow(1 + monthlyRate, numberOfPayments)) / (Math.pow(1 + monthlyRate, numberOfPayments) - 1);
+        } else {
+            monthlyEMI = loanAmount / numberOfPayments;
+        }
+
+        // Calculate totals
+        const totalAmount = monthlyEMI * numberOfPayments;
+        const totalInterest = totalAmount - loanAmount;
+
+        console.log('Results:', { monthlyEMI, totalAmount, totalInterest, loanAmount });
+
+        // Display results
+        document.getElementById('monthlyEMI').textContent = formatCurrency(monthlyEMI);
+        document.getElementById('totalAmount').textContent = formatCurrency(totalAmount);
+        document.getElementById('totalInterest').textContent = formatCurrency(totalInterest);
+
+        // Create chart
+        createBreakdownChart(loanAmount, totalInterest);
+
+        // Show results with fade-in effect
+        const results = document.getElementById('mortgageResults');
+        results.style.display = 'block';
+        results.style.opacity = '0';
+        results.style.transition = 'opacity 0.3s ease-in-out';
+
+        setTimeout(() => {
+            results.style.opacity = '1';
+        }, 10);
+
+    } catch (error) {
+        console.error('Error in calculateMortgage:', error);
+        alert('An error occurred while calculating. Please check your inputs and try again.');
+    }
+}
+
+function createBreakdownChart(principal, interest) {
+    const canvas = document.getElementById('breakdownChart');
+    if (!canvas) return;
+
+    const ctx = canvas.getContext('2d');
+
+    // Clear previous chart
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+    // Set up dimensions
+    const centerX = canvas.width / 2;
+    const centerY = canvas.height / 2;
+    const radius = 60;
+
+    // Calculate percentages
+    const total = principal + interest;
+    const principalPercent = (principal / total) * 100;
+    const interestPercent = (interest / total) * 100;
+
+    // Colors
+    const principalColor = '#28a745'; // Green
+    const interestColor = '#ffc107'; // Yellow/Orange
+
+    // Draw pie chart
+    let startAngle = 0;
+
+    // Principal slice
+    const principalAngle = (principalPercent / 100) * 2 * Math.PI;
+    ctx.beginPath();
+    ctx.arc(centerX, centerY, radius, startAngle, startAngle + principalAngle);
+    ctx.lineTo(centerX, centerY);
+    ctx.fillStyle = principalColor;
+    ctx.fill();
+    ctx.strokeStyle = '#ffffff';
+    ctx.lineWidth = 2;
+    ctx.stroke();
+
+    startAngle += principalAngle;
+
+    // Interest slice
+    const interestAngle = (interestPercent / 100) * 2 * Math.PI;
+    ctx.beginPath();
+    ctx.arc(centerX, centerY, radius, startAngle, startAngle + interestAngle);
+    ctx.lineTo(centerX, centerY);
+    ctx.fillStyle = interestColor;
+    ctx.fill();
+    ctx.stroke();
+
+    // Draw legend
+    const legendY = centerY + radius + 30;
+    const boxSize = 15;
+
+    // Principal legend
+    ctx.fillStyle = principalColor;
+    ctx.fillRect(20, legendY, boxSize, boxSize);
+    ctx.fillStyle = '#000';
+    ctx.font = '12px Arial';
+    ctx.fillText('Principal: ₹' + formatNumber(principal), 45, legendY + 12);
+
+    // Interest legend
+    ctx.fillStyle = interestColor;
+    ctx.fillRect(20, legendY + 25, boxSize, boxSize);
+    ctx.fillStyle = '#000';
+    ctx.fillText('Interest: ₹' + formatNumber(interest), 45, legendY + 37);
+
+    // Percentages
+    ctx.fillStyle = '#666';
+    ctx.font = '10px Arial';
+    ctx.fillText(principalPercent.toFixed(1) + '%', centerX - 15, centerY - 10);
+    ctx.fillText(interestPercent.toFixed(1) + '%', centerX - 15, centerY + 10);
+}
+
+function parseCurrency(value) {
+    if (!value) return 0;
+    // Remove currency symbols, commas, and extra spaces
+    const cleaned = value.replace(/[₹,\s]/g, '');
+    return parseFloat(cleaned) || 0;
+}
+
+function formatCurrency(amount) {
+    if (!amount && amount !== 0) return '-';
+    return formatNumber(amount);
+}
+
+function formatNumber(num) {
+    return num.toLocaleString('en-IN');
+}
+
+// Auto-format input fields as user types
+function formatInput(input) {
+    let value = input.value;
+
+    // For currency fields, add ₹ and commas
+    if (input.id === 'propertyPrice' || input.id === 'downPayment') {
+        const numericValue = parseCurrency(value);
+        if (numericValue > 0) {
+            input.value = '₹' + numericValue.toLocaleString('en-IN');
+        }
+    }
+
+    // For interest rate, add % symbol
+    if (input.id === 'interestRate' && value && !value.includes('%')) {
+        const numericValue = parseFloat(value);
+        if (!isNaN(numericValue)) {
+            input.value = numericValue + '%';
+        }
+    }
+
+    // For loan period, add "Months" or "Years" suffix based on value
+    if (input.id === 'loanPeriod' && value && !value.includes('Months') && !value.includes('Years')) {
+        const numericValue = parseInt(value);
+        if (!isNaN(numericValue)) {
+            // If value is greater than 100, treat as months, otherwise years
+            const suffix = numericValue > 100 ? ' Months' : ' Years';
+            input.value = numericValue + suffix;
+        }
+    }
+}
+
+// Add event listeners to input fields
+document.addEventListener('DOMContentLoaded', function() {
+    const propertyPriceInput = document.getElementById('propertyPrice');
+    const interestRateInput = document.getElementById('interestRate');
+    const loanPeriodInput = document.getElementById('loanPeriod');
+    const downPaymentInput = document.getElementById('downPayment');
+
+    if (propertyPriceInput) propertyPriceInput.addEventListener('blur', function() { formatInput(this); });
+    if (interestRateInput) interestRateInput.addEventListener('blur', function() { formatInput(this); });
+    if (loanPeriodInput) loanPeriodInput.addEventListener('blur', function() { formatInput(this); });
+    if (downPaymentInput) downPaymentInput.addEventListener('blur', function() { formatInput(this); });
+
+    // Debug: Check if calculateMortgage function is available
+    console.log('CalculateMortgage function available:', typeof calculateMortgage);
+});
+</script>
+<style>
+.pd-header{padding:12px 0;border-bottom:1px solid #eee;margin-bottom:14px}
+.pd-title{margin:0 0 6px 0}
+.pd-location{margin:0;color:#6c757d}
+.pd-price{margin:0;color:#28a745;font-weight:700}
+.property-gallery-wrap{position:relative}
+.property-gallery-slider{display:flex;overflow:hidden;border-radius:8px}
+.property-gallery-slider .pg-slide{min-width:100%}
+.property-gallery-slider img{width:100%;height:440px;object-fit:cover;border-radius:8px}
+.property-gallery-thumbs{display:flex;gap:10px;margin-top:10px;overflow-x:auto}
+.property-gallery-thumbs .pg-thumb{flex:0 0 120px;cursor:pointer;opacity:.75;border:2px solid transparent;border-radius:6px}
+.property-gallery-thumbs .pg-thumb.active{opacity:1;border-color:#007bff}
+.property-gallery-thumbs img{width:100%;height:80px;object-fit:cover;border-radius:6px}
+/* Ensure configuration numbers/text are dark */
+.properties-condition .condition li{color:#212529}
+.properties-condition .condition li i{color:#212529;margin-right:6px}
+.properties-condition .condition li span{color:#212529 !important}
+/* Ensure Property Details section text is dark */
+.property-details ul li{color:#000000 !important}
+.property-details ul li strong{color:#000000 !important}
+.property-details ul li span{color:#000000 !important}
+
+/* Property location text color */
+.pd-location {
+    color: #000000 !important;
+}
+
+.pd-location i {
+    color: #000000 !important;
+}
+
+#propAddress {
+    color: #000000 !important;
+}
+/* Enhanced Mortgage Calculator Styles */
+.financing-calculator .form-control {
+    color: #000000 !important;
+    background-color: #ffffff !important;
+    border: 1px solid #ced4da !important;
+}
+
+.financing-calculator .form-control::placeholder {
+    color: #6c757d !important;
+    opacity: 1;
+}
+
+.financing-calculator input:focus {
+    color: #000000 !important;
+    background-color: #ffffff !important;
+    border-color: #80bdff !important;
+    box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25) !important;
+}
+
+.financing-calculator .form-label {
+    color: #000000 !important;
+    font-weight: 600;
+    margin-bottom: 8px;
+}
+
+/* Map Container Styles */
+#contactMap {
+    width: 100% !important;
+    height: 400px !important;
+    background-color: #f8f9fa !important;
+    border: 2px solid #dee2e6 !important;
+    border-radius: 8px !important;
+    position: relative !important;
+    overflow: hidden !important;
+    z-index: 1 !important;
+}
+
+/* Ensure map is visible */
+.contact-map {
+    position: relative !important;
+    z-index: 1 !important;
+}
+
+.map {
+    position: relative !important;
+    z-index: 1 !important;
+}
+
+/* Debug overlay for map container */
+#contactMap::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: transparent;
+    z-index: 10;
+    pointer-events: none;
+}
+
+/* Result Display Styles */
+#mortgageResults {
+    background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%) !important;
+    border: 1px solid #dee2e6 !important;
+    border-radius: 12px !important;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1) !important;
+}
+
+#mortgageResults .text-primary {
+    color: #007bff !important;
+    font-weight: 700;
+}
+
+#mortgageResults .text-muted {
+    color: #6c757d !important;
+}
+
+/* Summary Row Styles */
+.summary-row {
+    padding: 15px 0;
+    border-bottom: 1px solid #e9ecef;
+    display: flex;
+    align-items: center;
+}
+
+.summary-row:last-child {
+    border-bottom: none;
+}
+
+.summary-row h6 {
+    font-weight: 600;
+    margin-bottom: 0;
+    color: #495057 !important;
+    white-space: nowrap; /* keep label on one line */
+}
+
+.summary-row h4 {
+    font-weight: 700;
+    margin-bottom: 0;
+    font-size: 18px;
+}
+
+/* Color-coded results with high specificity */
+#mortgageResults .summary-row h4.text-success,
+#mortgageResults .summary-row h4.text-success span {
+    color: #28a745 !important;
+}
+
+#mortgageResults .summary-row h4.text-info,
+#mortgageResults .summary-row h4.text-info span {
+    color: #17a2b8 !important;
+}
+
+#mortgageResults .summary-row h4.text-warning,
+#mortgageResults .summary-row h4.text-warning span {
+    color: #ffc107 !important;
+}
+
+#mortgageResults .summary-row h6.text-muted {
+    color: #6c757d !important;
+}
+
+/* Chart Container */
+#breakdownChart {
+    background: #ffffff;
+    border-radius: 8px;
+    padding: 15px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    margin: 20px auto;
+    display: block;
+    max-width: 300px;
+}
+
+/* Enhanced Property Details Styles */
+.property-details {
+    background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+    border-radius: 12px;
+    padding: 30px;
+    margin-bottom: 40px !important;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    border: 1px solid #dee2e6;
+    animation: fadeInUp 0.6s ease-out;
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.property-details .heading-2 {
+    color: #2c3e50;
+    font-size: 24px;
+    font-weight: 700;
+    margin-bottom: 25px;
+    position: relative;
+    padding-bottom: 10px;
+}
+
+.property-details .heading-2::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 60px;
+    height: 3px;
+    background: linear-gradient(90deg, #007bff, #28a745);
+    border-radius: 2px;
+}
+
+.property-details .row {
+    margin: 0 -15px;
+}
+
+.property-details .col-md-4 {
+    padding: 0 15px;
+}
+
+.property-details ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    background: #ffffff;
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    border: 1px solid #e9ecef;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.property-details ul::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 4px;
+    height: 100%;
+    background: linear-gradient(180deg, #007bff, #28a745);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.property-details ul:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.property-details ul:hover::before {
+    opacity: 1;
+}
+
+.property-details li {
+    padding: 12px 0;
+    border-bottom: 1px solid #f1f3f4;
+    display: flex;
+    align-items: center;
+    font-size: 14px;
+    line-height: 1.5;
+    position: relative;
+}
+
+.property-details li:last-child {
+    border-bottom: none;
+    margin-bottom: 0;
+    padding-bottom: 0;
+}
+
+.property-details li strong {
+    color: #495057;
+    font-weight: 600;
+    min-width: 100px;
+    margin-right: 15px;
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.property-details li span {
+    color: #007bff;
+    font-weight: 500;
+    font-size: 14px;
+    background: linear-gradient(135deg, #007bff, #0056b3);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+/* Icon styling for property details */
+.property-details li::before {
+    content: '';
+    width: 8px;
+    height: 8px;
+    background: linear-gradient(135deg, #007bff, #28a745);
+    border-radius: 50%;
+    margin-right: 12px;
+    flex-shrink: 0;
+    transition: all 0.3s ease;
+}
+
+.property-details li:hover::before {
+    transform: scale(1.2);
+    background: linear-gradient(135deg, #28a745, #007bff);
+}
+
+/* Responsive enhancements */
+@media (max-width: 768px) {
+    .property-details {
+        padding: 20px;
+        margin-bottom: 30px !important;
+    }
+
+    .property-details .heading-2 {
+        font-size: 20px;
+        margin-bottom: 20px;
+    }
+
+    .property-details ul {
+        padding: 15px;
+        margin-bottom: 15px;
+    }
+
+    .property-details li strong {
+        min-width: 80px;
+        font-size: 12px;
+    }
+
+    .property-details li span {
+        font-size: 13px;
+    }
+}
+
+@media (max-width: 576px) {
+    .property-details {
+        padding: 15px;
+    }
+
+    .property-details .col-md-6 {
+        margin-bottom: 15px;
+    }
+
+    .property-details li strong {
+        min-width: 70px;
+    }
+}
+</style>
+</body>
+</html>

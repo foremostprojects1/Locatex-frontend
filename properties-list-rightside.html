@@ -1,0 +1,1107 @@
+<!DOCTYPE html>
+<html lang="zxx">
+<head>
+    <title>Housy - Real Estate HTML5 Template</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="utf-8">
+
+    <!-- External CSS libraries -->
+    <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="css/animate.min.css">
+    <link rel="stylesheet" type="text/css" href="css/bootstrap-submenu.css">
+    <link rel="stylesheet" type="text/css" href="css/bootstrap-select.min.css">
+    <link rel="stylesheet" href="css/leaflet.css" type="text/css">
+    <link rel="stylesheet" href="css/map.css" type="text/css">
+    <link rel="stylesheet" type="text/css" href="fonts/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="fonts/flaticon/font/flaticon.css">
+    <link rel="stylesheet" type="text/css" href="fonts/linearicons/style.css">
+    <link rel="stylesheet" type="text/css"  href="css/jquery.mCustomScrollbar.css">
+    <link rel="stylesheet" type="text/css"  href="css/dropzone.css">
+    <link rel="stylesheet" type="text/css"  href="css/slick.css">
+
+    <!-- Custom stylesheet -->
+    <link rel="stylesheet" type="text/css" href="css/style.css">
+    <link rel="stylesheet" type="text/css" id="style_sheet" href="css/skins/default.css">
+
+    <!-- Favicon icon -->
+    <link rel="shortcut icon" href="img/favicon.ico" type="image/x-icon" >
+
+    <!-- Google fonts -->
+    <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700%7CRoboto:300,400,500,700&display=swap">
+
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <link rel="stylesheet" type="text/css" href="css/ie10-viewport-bug-workaround.css">
+
+    <!-- Just for debugging purposes. Don't actually copy these 2 lines! -->
+    <!--[if lt IE 9]><script src="js/ie8-responsive-file-warning.js"></script><![endif]-->
+    <script src="js/ie-emulation-modes-warning.js"></script>
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+    <script src="js/html5shiv.min.js"></script>
+    <script src="js/respond.min.js"></script>
+    <![endif]-->
+</head>
+<body>
+<div class="page_loader"></div>
+
+<!-- Header Include -->
+<div id="header-container"></div>
+
+<script>
+    // Load header.html content
+    fetch('header.html')
+        .then(response => response.text())
+        .then(data => {
+            document.getElementById('header-container').innerHTML = data;
+        })
+        .catch(error => {
+            console.error('Error loading header:', error);
+        });
+</script>
+
+<!-- Sub banner start -->
+<div class="sub-banner">
+    <div class="container">
+        <div class="page-name">
+            <h1>Properties Listing</h1>
+            <ul>
+                <li><a href="index.html">Index</a></li>
+                <li><span>/</span>Properties Listing</li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<!-- Properties section body start -->
+<div class="properties-section content-area">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-md-12">
+                <!-- Option bar start -->
+                <div class="option-bar">
+                    <div class="float-left">
+                        <h4>
+                            <span class="heading-icon">
+                                <i class="fa fa-th-list"></i>
+                            </span>
+                            <span class="title-name">Properties List</span>
+                        </h4>
+                    </div>
+                    <div class="float-right cod-pad">
+                        <div class="sorting-options">
+                            <select class="sorting" id="sortingSelect">
+                                <option value="new">New To Old</option>
+                                <option value="old">Old To New</option>
+                                <option value="price_desc">Price (High To Low)</option>
+                                <option value="price_asc">Price (Low To High)</option>
+                            </select>
+                            <a href="properties-list-rightside.html" class="change-view-btn active-view-btn"><i class="fa fa-th-list"></i></a>
+                            <span id="resultsCount" class="badge badge-primary" style="margin-left:8px;">0</span>
+                        </div>
+                    </div>
+                </div>
+                <!-- Dynamic list mount point -->
+                <div id="dynamicListMount"></div>
+                <!-- Pagination container -->
+                <div id="pagination-container"></div>
+                <!-- Page info -->
+                <div id="page-info" class="text-center mt-3 mb-3" style="color: #666; font-size: 14px;"></div>
+            </div>
+            <div class="col-lg-4 col-md-12">
+                <div class="sidebar-right">
+                    <!-- Advanced search start -->
+                    <div class="sidebar widget advanced-search">
+                        <h3 class="sidebar-title">Advanced Search</h3>
+                        <div class="s-border"></div>
+                        <div class="m-border"></div>
+                        <form method="GET">
+                            <div class="form-group">
+                                <select class="selectpicker search-fields" name="property-sdtatus">
+                                    <option>Property Status</option>
+                                    <option>For Sale</option>
+                                    <option>For Rent</option>
+                                </select>
+                            </div>
+                            <!-- <div class="form-group">
+                                <select class="selectpicker search-fields" name="property-type" id="filterType">
+                                    <option value="">Property Type</option>
+                                    <option value="house">House</option>
+                                    <option value="apartment">Apartments</option>
+                                    <option value="land">Land</option>
+                                    <option value="commercial">Commercial</option>
+                                    <option value="industrial">Industrial</option>
+                                </select>
+                            </div> -->
+                            <div class="range-slider">
+                                <label>Area</label>
+                                <div data-min="0" data-max="100000" data-min-name="min_area" data-max-name="max_area" data-unit="Vigha" class="range-slider-ui ui-slider" aria-disabled="false"></div>
+                                <div class="clearfix"></div>
+                            </div>
+                            <div class="range-slider">
+                                <label>Price</label>
+                                <div data-min="0" data-max="10000000"  data-min-name="min_price" data-max-name="max_price" data-unit="₹" class="range-slider-ui ui-slider" aria-disabled="false"></div>
+                                <div class="clearfix"></div>
+                            </div>
+                            <a class="show-more-options" data-toggle="collapse" data-target="#options-content">
+                                <!-- <i class="fa fa-plus-circle"></i> Show More Options -->
+                            </a>
+                            <div id="options-content" class="collapse">
+                                <label class="margin-t-10">Features</label>
+                                <div class="s-border"></div>
+                                <div class="m-border"></div>
+                                <!-- <div class="checkbox checkbox-theme checkbox-circle">
+                                    <input id="checkbox1" type="checkbox">
+                                    <label for="checkbox1">
+                                        Free Parking
+                                    </label>
+                                </div> -->
+                                <!-- <div class="checkbox checkbox-theme checkbox-circle">
+                                    <input id="checkbox2" type="checkbox">
+                                    <label for="checkbox2">
+                                        Air Condition
+                                    </label>
+                                </div>
+                                <div class="checkbox checkbox-theme checkbox-circle">
+                                    <input id="checkbox3" type="checkbox">
+                                    <label for="checkbox3">
+                                        Places to seat
+                                    </label>
+                                </div>
+                                <div class="checkbox checkbox-theme checkbox-circle">
+                                    <input id="checkbox4" type="checkbox">
+                                    <label for="checkbox4">
+                                        Swimming Pool
+                                    </label>
+                                </div> -->
+                                <!-- <div class="checkbox checkbox-theme checkbox-circle">
+                                    <input id="checkbox5" type="checkbox">
+                                    <label for="checkbox5">
+                                        Laundry Room
+                                    </label>
+                                </div>
+                                <div class="checkbox checkbox-theme checkbox-circle">
+                                    <input id="checkbox6" type="checkbox">
+                                    <label for="checkbox6">
+                                        Window Covering
+                                    </label>
+                                </div> -->
+                                <!-- <div class="checkbox checkbox-theme checkbox-circle">
+                                    <input id="checkbox7" type="checkbox">
+                                    <label for="checkbox7">
+                                        Central Heating
+                                    </label>
+                                </div> -->
+                                <!-- <div class="checkbox checkbox-theme checkbox-circle">
+                                    <input id="checkbox8" type="checkbox">
+                                    <label for="checkbox8">
+                                        Alarm
+                                    </label>
+                                </div> -->
+                            </div>
+                            <div class="form-group mb-0">
+                                <div class="row">
+                                    <div class="col-6">
+                                        <button type="submit" class="btn btn-outline-primary btn-block search-btn">Search</button>
+                                    </div>
+                                    <div class="col-6">
+                                        <button type="button" id="resetButton" class="btn btn-outline-danger btn-block reset-btn">Reset</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <!-- Posts by category start -->
+                    <div class="posts-by-category widget">
+                        <h3 class="sidebar-title">Category</h3>
+                        <div class="s-border"></div>
+                        <div class="m-border"></div>
+                        <ul class="list-unstyled list-cat">
+                            <!-- <li><a href="#">House<span>(45)</span></a></li> -->
+                            <!-- <li><a href="#">Apartment <span>(21)</span> </a></li> -->
+                            <!-- <li><a href="#">Commercial <span>(23)</span></a></li> -->
+                            <li><a href="#">Land <span>(19)</span></a></li>
+                            <!-- <li><a href="#">Industrial <span>(19)</span></a> </li> -->
+                        </ul>
+                    </div>
+                    <!-- Helping Center start -->
+                    <div class="widget helping-center">
+                        <h3 class="sidebar-title">Helping Center</h3>
+                        <div class="s-border"></div>
+                        <div class="m-border"></div>
+                        <ul class="contact-link">
+                            <li>
+                                <i class="flaticon-location"></i>
+                                Morbi, India
+                            </li>
+                            <li>
+                                <i class="flaticon-technology-1"></i>
+                                <a href="tel:+919998236623">
+                                    +91 99982 36623
+                                </a>
+                            </li>
+                            <li>
+                                <i class="flaticon-envelope"></i>
+                                <a href="mailto:info@themevessel.com">
+                                    info@themevessel.com
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Footer start -->
+<div id="footer-container"></div>
+
+<script>
+    // Load footer.html content
+    fetch('footer.html')
+        .then(response => response.text())
+        .then(data => {
+            document.getElementById('footer-container').innerHTML = data;
+        })
+        .catch(error => {
+            console.error('Error loading footer:', error);
+        });
+</script>
+
+<script src="js/jquery-2.2.0.min.js"></script>
+<script src="js/popper.min.js"></script>
+<script src="js/bootstrap.min.js"></script>
+<script src="js/bootstrap-submenu.js"></script>
+<script src="js/rangeslider.js"></script>
+<script src="js/jquery.mb.YTPlayer.js"></script>
+<script src="js/wow.min.js"></script>
+<script src="js/bootstrap-select.min.js"></script>
+<script src="js/jquery.easing.1.3.js"></script>
+<script src="js/jquery.scrollUp.js"></script>
+<script src="js/jquery.mCustomScrollbar.concat.min.js"></script>
+<script src="js/leaflet.js"></script>
+<script src="js/leaflet-providers.js"></script>
+<script src="js/leaflet.markercluster.js"></script>
+<script src="js/dropzone.js"></script>
+<script src="js/slick.min.js"></script>
+<script src="js/jquery.filterizr.js"></script>
+<script src="js/jquery.magnific-popup.min.js"></script>
+<script src="js/jquery.countdown.js"></script>
+<script src="js/maps.js"></script>
+<script src="js/app.js"></script>
+
+<!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+<script src="js/ie10-viewport-bug-workaround.js"></script>
+
+<script>
+(function(){
+    var API_BASE = 'http://localhost:5000';
+    var mount = document.getElementById('dynamicListMount');
+    function getEl(sel){ return document.querySelector(sel); }
+    function setVisible(el, v){ if(el){ el.style.display = v?'' : 'none'; } }
+    function priceStr(n){ try{ return '₹ ' + Number(n||0).toLocaleString(); }catch(e){ return n||''; } }
+
+    // Remove static seed items before we render dynamic items to avoid overlap/layout issues
+    var removedStatic = false;
+    function removeStaticIfNeeded(){
+      if(removedStatic) return;
+      var toRemove = Array.prototype.slice.call(document.querySelectorAll('.property-box-2'))
+        .filter(function(n){ return !n.closest('#dynamicListMount'); });
+      toRemove.forEach(function(n){ n.parentNode && n.parentNode.removeChild(n); });
+      console.log('[properties] Removed static cards:', toRemove.length);
+      removedStatic = true;
+    }
+
+    function propertyUrl(p){ return 'properties-details.html?id=' + encodeURIComponent(p._id); }
+
+    function facilityHTML(p){
+      var parts = [];
+      if(p.totalArea){ parts.push('<li><i class="flaticon-square"></i> ' + p.totalArea + ' sq ft</li>'); }
+      if(p.bhk){ parts.push('<li><i class="flaticon-furniture"></i> ' + p.bhk + ' BHK</li>'); }
+      if(typeof p.bathrooms !== 'undefined'){ parts.push('<li><i class="flaticon-holidays"></i> ' + p.bathrooms + ' Baths</li>'); }
+      if(p.type === 'apartment'){
+        if(p.carParking){ parts.push('<li><i class="flaticon-vehicle"></i> ' + p.carParking + ' Parking</li>'); }
+      }
+      return parts.join('');
+    }
+
+    function cardHTML(p){
+      var status = p.status || '';
+      var img = (p.images && p.images[0] && p.images[0].url) || 'img/dummy-property.png';
+      var city = (p.location && p.location.city) || '';
+      var state = (p.location && p.location.state) || '';
+      var locationText = '';
+
+      // Show city and state instead of full address
+      if (city && state) {
+        locationText = city + ', ' + state.charAt(0).toUpperCase() + state.slice(1);
+      } else if (city) {
+        locationText = city;
+      } else if (state) {
+        locationText = state.charAt(0).toUpperCase() + state.slice(1);
+      } else {
+        locationText = 'Location not available';
+      }
+
+      // Check if property is favorited
+      var favoritedProperties = JSON.parse(localStorage.getItem('favoritedProperties') || '[]');
+      var isFavorited = favoritedProperties.some(function(fav) { return fav._id === p._id; });
+      var favoriteClass = isFavorited ? 'favorited' : '';
+      var favoriteIcon = isFavorited ? 'fa-heart' : 'fa-heart-o';
+
+      return '<div class="property-box-2">' +
+        '<div class="row">' +
+          '<div class="col-lg-5 col-md-5 col-pad">' +
+            '<a href="' + propertyUrl(p) + '" class="property-img">' +
+              '<img src="' + img + '" alt="property" class="img-fluid">' +
+              '<div class="listing-badges">' +
+                (p.isFeatured ? '<span class="featured">Featured</span>' : '') +
+                (status ? '<span class="listing-time">' + status + '</span>' : '') +
+              '</div>' +
+              '<div class="price-box">' + priceStr(p.price) + '</div>' +
+            '</a>' +
+          '</div>' +
+          '<div class="col-lg-7 col-md-7 col-pad">' +
+            '<div class="detail">' +
+              '<div class="property-header">' +
+                '<h3 class="title"><a href="' + propertyUrl(p) + '">' + (p.title || 'Property') + '</a></h3>' +
+                '<button class="favorite-btn ' + favoriteClass + '" onclick="toggleFavorite(\'' + p._id + '\', event)" data-property-id="' + p._id + '">' +
+                  '<i class="fa ' + favoriteIcon + '"></i>' +
+                '</button>' +
+              '</div>' +
+              '<p class="location">' +
+                '<a href="' + propertyUrl(p) + '"><i class="flaticon-location"></i>' + locationText + '</a>' +
+              '</p>' +
+              '<ul class="facilities-list clearfix">' + facilityHTML(p) + '</ul>' +
+            '</div>' +
+            '<div class="footer clearfix">' +
+              '<div class="pull-left days">' + ((p.owner && p.owner.name) ? ('<a><i class="fa fa-user"></i> ' + p.owner.name + '</a>') : '') + '</div>' +
+            '</div>' +
+          '</div>' +
+        '</div>' +
+      '</div>';
+    }
+
+    var allProps = [];
+
+    function tryFetch(url){ return fetch(url).then(function(r){ return r.json(); }); }
+
+    function backendSortParam(){
+      var sel = document.getElementById('sortingSelect');
+      var v = sel ? sel.value : 'new';
+      if(v==='price_desc') return 'price-desc';
+      if(v==='price_asc') return 'price-asc';
+      if(v==='old') return 'oldest';
+      return 'newest';
+    }
+
+    var currentPage = 1;
+    var itemsPerPage = 5;
+    var totalPages = 0;
+
+    function loadList(page = 1){
+      var url = API_BASE + '/api/properties?limit=100&page=1&sort=' + encodeURIComponent(backendSortParam());
+      console.log('[properties] Fetching all properties for pagination:', url);
+      tryFetch(url).then(function(data){
+        var allProperties = (data && data.data && data.data.properties) || [];
+        console.log('[properties] Loaded total count:', allProperties.length);
+
+        // Calculate pagination
+        totalPages = Math.ceil(allProperties.length / itemsPerPage);
+        currentPage = Math.max(1, Math.min(page, totalPages));
+
+        // Get properties for current page
+        var startIndex = (currentPage - 1) * itemsPerPage;
+        var endIndex = startIndex + itemsPerPage;
+        var pageProperties = allProperties.slice(startIndex, endIndex);
+
+        console.log('[properties] Page', currentPage, 'of', totalPages, '- showing', pageProperties.length, 'properties');
+        allProps = allProperties; // Keep full list for filtering
+        removeStaticIfNeeded();
+        render(pageProperties);
+        updateResultsCount(pageProperties);
+        renderPagination();
+      }).catch(function(err){
+        console.error('[properties] Failed to load properties:', err);
+        render([]);
+        updateResultsCount([]);
+        renderPagination();
+      });
+    }
+
+    var currentFilteredList = null; // Track filtered results
+
+    function updateResultsCount(list) {
+      var rc = document.getElementById('resultsCount');
+      if(rc){ 
+        rc.textContent = String(list.length); 
+      }
+    }
+
+    function renderPagination(currentList = allProps){
+      // Hide pagination and page info if less than 5 results
+      if(currentList.length < 5) {
+        var paginationContainer = document.getElementById('pagination-container');
+        var pageInfo = document.getElementById('page-info');
+
+        if(paginationContainer) paginationContainer.style.display = 'none';
+        if(pageInfo) pageInfo.style.display = 'none';
+        return;
+      }
+
+      // Show pagination and page info if 5 or more results
+      var paginationContainer = document.getElementById('pagination-container');
+      var pageInfo = document.getElementById('page-info');
+
+      if(paginationContainer) paginationContainer.style.display = 'flex';
+      if(pageInfo) pageInfo.style.display = 'block';
+
+      if(totalPages <= 1) return;
+
+      var paginationHtml = '';
+
+      // Previous button
+      if(currentPage > 1){
+        paginationHtml += '<li class="page-item"><a class="page-link" href="#" onclick="changePage(' + (currentPage - 1) + '); return false;">&laquo;&laquo;</a></li>';
+      }
+
+      // Page numbers
+      var startPage = Math.max(1, currentPage - 2);
+      var endPage = Math.min(totalPages, currentPage + 2);
+
+      if(startPage > 1){
+        paginationHtml += '<li class="page-item"><a class="page-link" href="#" onclick="changePage(1); return false;">1</a></li>';
+        if(startPage > 2){
+          paginationHtml += '<li class="page-item disabled"><span class="page-link">...</span></li>';
+        }
+      }
+
+      for(var i = startPage; i <= endPage; i++){
+        var activeClass = i === currentPage ? 'active' : '';
+        paginationHtml += '<li class="page-item ' + activeClass + '"><a class="page-link" href="#" onclick="changePage(' + i + '); return false;">' + i + '</a></li>';
+      }
+
+      if(endPage < totalPages){
+        if(endPage < totalPages - 1){
+          paginationHtml += '<li class="page-item disabled"><span class="page-link">...</span></li>';
+        }
+        paginationHtml += '<li class="page-item"><a class="page-link" href="#" onclick="changePage(' + totalPages + '); return false;">' + totalPages + '</a></li>';
+      }
+
+      // Next button
+      if(currentPage < totalPages){
+        paginationHtml += '<li class="page-item"><a class="page-link" href="#" onclick="changePage(' + (currentPage + 1) + '); return false;">&raquo;&raquo;</a></li>';
+      }
+
+      if(paginationContainer){
+        paginationContainer.innerHTML = '<nav aria-label="Property pagination"><ul class="pagination justify-content-center">' + paginationHtml + '</ul></nav>';
+      }
+
+      // Update page info
+      if(pageInfo){
+        var startItem = (currentPage - 1) * itemsPerPage + 1;
+        var endItem = Math.min(currentPage * itemsPerPage, currentList.length);
+        pageInfo.textContent = 'Showing ' + startItem + ' - ' + endItem + ' of ' + currentList.length + ' properties';
+      }
+    }
+
+    function changePage(page){
+      if(page < 1 || page > totalPages) return;
+      currentPage = page;
+
+      // Use filtered list if available, otherwise use full list
+      var displayList = currentFilteredList || allProps;
+
+      // Get properties for current page
+      var startIndex = (currentPage - 1) * itemsPerPage;
+      var endIndex = startIndex + itemsPerPage;
+      var pageProperties = displayList.slice(startIndex, endIndex);
+
+      render(pageProperties);
+      updateResultsCount(pageProperties);
+      renderPagination(displayList);
+    }
+
+    // Make toggleFavorite globally available for onclick handlers
+    window.toggleFavorite = toggleFavorite;
+
+    function toggleFavorite(propertyId, event) {
+      event.preventDefault();
+      event.stopPropagation();
+
+      console.log('🔄 Toggling favorite for property:', propertyId);
+
+      var favoritedProperties = JSON.parse(localStorage.getItem('favoritedProperties') || '[]');
+      var property = allProps.find(function(p) { return p._id === propertyId; });
+
+      if (!property) {
+        console.error('❌ Property not found:', propertyId);
+        return;
+      }
+
+      console.log('📋 Current favorited properties count:', favoritedProperties.length);
+      var isFavorited = favoritedProperties.some(function(fav) { return fav._id === propertyId; });
+      console.log('❤️ Is currently favorited:', isFavorited);
+
+      if (isFavorited) {
+        // Remove from favorites
+        favoritedProperties = favoritedProperties.filter(function(fav) { return fav._id !== propertyId; });
+        console.log('🗑️ Removed from favorites');
+      } else {
+        // Add to favorites (include dateAdded)
+        property.dateAdded = new Date().toISOString();
+        favoritedProperties.push(property);
+        console.log('➕ Added to favorites, total now:', favoritedProperties.length);
+      }
+
+      localStorage.setItem('favoritedProperties', JSON.stringify(favoritedProperties));
+      console.log('💾 Saved to localStorage');
+
+      // Update the UI for this specific card
+      updateFavoriteButton(propertyId);
+
+      console.log('✅ Property ' + (isFavorited ? 'removed from' : 'added to') + ' favorites:', property.title);
+    }
+
+    function updateFavoriteButton(propertyId) {
+      var favoritedProperties = JSON.parse(localStorage.getItem('favoritedProperties') || '[]');
+      var isFavorited = favoritedProperties.some(function(fav) { return fav._id === propertyId; });
+
+      var button = document.querySelector('[data-property-id="' + propertyId + '"]');
+      if (button) {
+        if (isFavorited) {
+          button.classList.add('favorited');
+          button.querySelector('i').className = 'fa fa-heart';
+        } else {
+          button.classList.remove('favorited');
+          button.querySelector('i').className = 'fa fa-heart-o';
+        }
+      }
+    }
+
+    function updateAllFavoriteButtons() {
+      var favoritedProperties = JSON.parse(localStorage.getItem('favoritedProperties') || '[]');
+      favoritedProperties.forEach(function(property) {
+        updateFavoriteButton(property._id);
+      });
+    }
+
+    function applyFilters(list){
+      var form = getEl('.sidebar.widget.advanced-search form');
+      if(!form) return list;
+      var fd = new FormData(form);
+      function cleanPlaceholder(val){
+        if(!val) return '';
+        var v = String(val).trim().toLowerCase();
+        var placeholders = ['property status','property type','bedrooms','bathroom','balcony','garage','location'];
+        return placeholders.indexOf(v) !== -1 ? '' : String(val);
+      }
+      var rawStatus = cleanPlaceholder(fd.get('property-sdtatus'));
+      var status = (rawStatus||'').toLowerCase().replace(/\s+/g,'-');
+      var type = (cleanPlaceholder(fd.get('property-type'))||'').toLowerCase();
+      var bedrooms = cleanPlaceholder(fd.get('bedrooms')||'');
+      var bathroom = cleanPlaceholder(fd.get('bathroom')||'');
+      var balcony = cleanPlaceholder(fd.get('balcony')||'');
+      var garage = cleanPlaceholder(fd.get('garage')||'');
+      var minArea = Number(fd.get('min_area')||0);
+      var maxArea = Number(fd.get('max_area')||0);
+      var minPrice = Number(fd.get('min_price')||0);
+      var maxPrice = Number(fd.get('max_price')||0);
+      return list.filter(function(p){
+        if(status && (String(p.status||'').toLowerCase().replace(/\s+/g,'-') !== status)) return false;
+        if(type && String(p.type||'').toLowerCase() !== type) return false;
+        if(bedrooms && String(p.bhk||'') !== String(bedrooms)) return false;
+        if(bathroom && String(p.bathrooms||'') !== String(bathroom)) return false;
+        if(balcony && String(p.balconies||'') !== String(balcony)) return false;
+        if(garage && p.type==='apartment' && String(p.carParking||'') !== String(garage)) return false;
+        if(minArea && Number(p.totalArea||0) < minArea) return false;
+        if(maxArea && Number(p.totalArea||0) > maxArea) return false;
+        if(minPrice && Number(p.price||0) < minPrice) return false;
+        if(maxPrice && Number(p.price||0) > maxPrice) return false;
+        return true;
+      });
+    }
+
+    function applySort(list){
+      var sel = document.getElementById('sortingSelect');
+      var v = sel ? sel.value : 'new';
+      var arr = list.slice();
+      if(v==='price_desc'){ arr.sort(function(a,b){ return Number(b.price||0)-Number(a.price||0); }); }
+      else if(v==='price_asc'){ arr.sort(function(a,b){ return Number(a.price||0)-Number(b.price||0); }); }
+      else if(v==='old'){ arr.sort(function(a,b){ return new Date(a.createdAt||0)-new Date(b.createdAt||0); }); }
+      else { arr.sort(function(a,b){ return new Date(b.createdAt||0)-new Date(a.createdAt||0); }); }
+      return arr;
+    }
+
+    function render(list){
+      if(!mount) return;
+      // By default render full list; filters apply only when user submits the sidebar form
+      var filtered = list;
+      var sorted = applySort(filtered);
+      console.log('[properties] Rendering count:', sorted.length, 'mount exists:', !!mount);
+      if(sorted.length === 0){
+        mount.innerHTML = '<div class="alert alert-info" role="alert" style="margin: 15px 0;">No properties found.</div>';
+      } else {
+        mount.innerHTML = sorted.map(cardHTML).join('');
+        // Post-render verification
+        var rendered = mount.querySelectorAll('.property-box-2').length;
+        console.log('[properties] Rendered DOM cards:', rendered);
+      }
+      updateResultsCount(sorted);
+    }
+
+    function wireUI(){
+      var form = getEl('.sidebar.widget.advanced-search form');
+      if(form){
+        form.addEventListener('submit', function(e){ e.preventDefault();
+          // Apply filters only when user explicitly submits
+          var filtered = applyFilters(allProps);
+          currentFilteredList = filtered; // Store filtered results
+          render(filtered);
+          // Recalculate pagination for filtered results
+          totalPages = Math.ceil(filtered.length / itemsPerPage);
+          currentPage = 1; // Reset to first page when filtering
+          renderPagination(filtered);
+        });
+
+        // Reset button: clear form UI and show full list
+        var resetBtn = document.getElementById('resetButton');
+        if(resetBtn){
+          resetBtn.addEventListener('click', function(e){
+            e.preventDefault();
+            try { form.reset(); } catch(_){ }
+            // Clear hidden range inputs if present so filters become inactive
+            ['min_area','max_area','min_price','max_price'].forEach(function(n){
+              var inp = form.querySelector('input[name="'+n+'"]');
+              if(inp){ inp.value = ''; }
+            });
+            // Refresh bootstrap-select pickers if available
+            try { if (window.jQuery && $.fn.selectpicker) { $(form).find('.selectpicker').selectpicker('refresh'); } } catch(_){ }
+            // Reset displayed range texts
+            var spans = form.querySelectorAll('.range-value span');
+            spans.forEach(function(s){ s.textContent = ''; });
+            // Collapse extra options section if open
+            var more = document.getElementById('options-content');
+            try { if(more && $(more).hasClass('show')) { $(more).collapse('hide'); } } catch(_){ }
+            // Clear filtered list and reset pagination
+            currentFilteredList = null;
+            totalPages = Math.ceil(allProps.length / itemsPerPage);
+            currentPage = 1;
+            render(allProps);
+            renderPagination(allProps);
+          });
+        }
+      }
+      var sortSel = document.getElementById('sortingSelect');
+      if(sortSel){ sortSel.addEventListener('change', function(){
+        var filtered = currentFilteredList || applyFilters(allProps);
+        var sorted = applySort(filtered);
+        currentFilteredList = sorted; // Update filtered list with sorted results
+        render(sorted);
+        renderPagination(sorted);
+      }); }
+
+      // Garage -> Parking logic based on type
+      var typeSel = document.getElementById('filterType');
+      var garageGroup = form && form.querySelector('select[name="garage"]').closest('.form-group');
+      var garageLabel = garageGroup && garageGroup.querySelector('select[name="garage"] option:first-child');
+      function updateGarage(){
+        var t = (typeSel && typeSel.value)||'';
+        if(!garageGroup) return;
+        if(t==='apartment'){
+          setVisible(garageGroup, true);
+          if(garageLabel) garageLabel.textContent = 'Parking';
+        } else {
+          setVisible(garageGroup, false);
+        }
+      }
+      if(typeSel){ typeSel.addEventListener('change', function(){ updateGarage(); render(allProps); }); updateGarage(); }
+    }
+
+    function init(){
+      try { wireUI(); } catch(e){ console.warn('wireUI error:', e); }
+      try { loadList(); } catch(e){ console.warn('loadList error:', e); }
+      try { updateAllFavoriteButtons(); } catch(e){ console.warn('updateAllFavoriteButtons error:', e); }
+    }
+    console.log('[properties] Init start. ReadyState=', document.readyState, 'mount:', !!mount);
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', init);
+    } else {
+      init();
+    }
+})();
+</script>
+
+  <style>
+/* Force property listing texts to black */
+.property-box-2 .detail, .property-box-2 .detail a, .property-box-2 .detail .location a,
+.property-box-2 .detail .facilities-list li, .property-box-2 .detail .facilities-list li i { color: #000 !important; }
+
+/* Sorting select text to black */
+.advanced-search .bootstrap-select .dropdown-menu.inner li a span.text { color: #000 !important; }
+
+/* Also cover native selects just in case */
+.advanced-search select.search-fields { color: #000 !important; }
+
+  /* Ensure each dynamic card stacks with spacing */
+  #dynamicListMount .property-box-2 { display: block; margin-bottom: 25px; }
+
+  /* Favorite Button Styles */
+  .property-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 10px;
+  }
+
+  .favorite-btn {
+    background: none;
+    border: none;
+    color: #ccc;
+    font-size: 18px;
+    padding: 5px 8px;
+    border-radius: 50%;
+    transition: all 0.3s ease;
+    cursor: pointer;
+    outline: none;
+    position: relative;
+    top: -5px;
+    right: -5px;
+  }
+
+  .favorite-btn:hover {
+    color: #ff6b6b;
+    transform: scale(1.1);
+  }
+
+  .favorite-btn.favorited {
+    color: #ff4757;
+    background: rgba(255, 71, 87, 0.1);
+  }
+
+  .favorite-btn.favorited:hover {
+    color: #ff3742;
+    background: rgba(255, 71, 87, 0.2);
+  }
+
+  .favorite-btn i {
+    transition: all 0.3s ease;
+  }
+
+  /* Advanced Search buttons: equal size and outlined styles */
+  .advanced-search .search-btn,
+  .advanced-search .reset-btn {
+    width: 100% !important;
+    display: block;
+    padding: 10px 16px;
+    border-width: 2px;
+    font-weight: 600;
+    box-sizing: border-box;
+  }
+  /* Outline primary (blue) */
+  .advanced-search .btn-outline-primary {
+    color: #007bff !important;
+    border-color: #007bff !important;
+    background-color: transparent !important;
+  }
+  .advanced-search .btn-outline-primary:hover,
+  .advanced-search .btn-outline-primary:focus,
+  .advanced-search .btn-outline-primary:active {
+    color: #fff !important;
+    background-color: #007bff !important;
+    border-color: #007bff !important;
+  }
+  /* Outline danger (red) */
+  .advanced-search .btn-outline-danger {
+    color: #dc3545 !important;
+    border-color: #dc3545 !important;
+    background-color: transparent !important;
+  }
+  .advanced-search .btn-outline-danger:hover,
+  .advanced-search .btn-outline-danger:focus,
+  .advanced-search .btn-outline-danger:active {
+    color: #fff !important;
+    background-color: #dc3545 !important;
+    border-color: #dc3545 !important;
+  }
+  /* Remove any theme padding/width conflicts for the original .search-button class if present */
+  .advanced-search .search-button { padding: 0 !important; border: none !important; background: none !important; }
+
+  /* Pagination Styles */
+  #pagination-container {
+    margin: 30px 0 20px 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  #pagination-container .pagination {
+    margin-bottom: 0;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    border-radius: 8px;
+    overflow: hidden;
+    display: flex;
+    flex-wrap: nowrap;
+    justify-content: center;
+  }
+
+  #pagination-container .page-link {
+    color: #007bff;
+    background-color: #fff; 
+    border: 1px solid #dee2e6;
+    padding: 12px 20px;
+    margin: 0 2px;
+    border-radius: 6px !important;
+    transition: all 0.3s ease;
+    font-weight: 500;
+    text-decoration: none;
+    white-space: nowrap;
+    min-width: 60px;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    line-height: 1.2;
+    position: relative;
+  }
+
+  /* Special styling for Previous/Next buttons */
+  #pagination-container .page-link[href*="«"],
+  #pagination-container .page-link[href*="»"] {
+    min-width: 80px;
+    padding: 12px 24px;
+  }
+
+  #pagination-container .page-link:hover {
+    color: #0056b3;
+    background-color: #e9ecef;
+    border-color: #dee2e6;
+    text-decoration: none;
+  }
+
+  #pagination-container .page-item.active .page-link {
+    background-color: #007bff;
+    border-color: #007bff;
+    color: #fff;
+    box-shadow: 0 2px 4px rgba(0,123,255,0.3);
+  }
+
+  #pagination-container .page-item.disabled .page-link {
+    color: #6c757d;
+    background-color: #fff;
+    border-color: #dee2e6;
+    cursor: not-allowed;
+  }
+
+  #pagination-container .page-link:focus {
+    box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+    outline: none;
+  }
+
+  /* Page info styling */
+  #page-info {
+    background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+    padding: 12px 20px;
+    border-radius: 8px;
+    border: 1px solid #dee2e6;
+    font-weight: 500;
+    color: #495057;
+    margin-bottom: 20px;
+  }
+
+  /* Mobile responsive pagination */
+  @media (max-width: 768px) {
+    #pagination-container {
+      margin: 20px 0 15px 0;
+    }
+
+    #pagination-container .pagination {
+      flex-wrap: nowrap;
+      overflow-x: auto;
+      padding: 5px;
+      justify-content: flex-start;
+    }
+
+    #pagination-container .page-link {
+      padding: 10px 16px;
+      margin: 0 2px;
+      font-size: 14px;
+      min-width: 50px;
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    /* Special styling for Previous/Next on mobile */
+    #pagination-container .page-link[href*="«"],
+    #pagination-container .page-link[href*="»"] {
+      min-width: 70px;
+      padding: 10px 20px;
+    }
+
+    #page-info {
+      font-size: 13px;
+      padding: 10px 15px;
+      text-align: center;
+    }
+  }
+
+  @media (max-width: 576px) {
+    #pagination-container .pagination {
+      justify-content: center;
+    }
+
+    #pagination-container .page-link {
+      padding: 8px 14px;
+      font-size: 13px;
+      min-width: 60px;
+    }
+  }
+
+    /* Special styling for Previous/Next on small mobile */
+
+  </style>
+
+  <script>
+    // Fetch and update category counts using frontend JavaScript
+    document.addEventListener('DOMContentLoaded', function() {
+      console.log('🔄 Loading category counts from properties data...');
+
+      // Initialize counters for each property type
+      let houseCount = 0;
+      let apartmentCount = 0;
+      let commercialCount = 0;
+      let landCount = 0;
+      let industrialCount = 0;
+
+      // Fetch all properties to count categories
+      fetch('http://localhost:5000/api/properties?limit=1000') 
+        .then(response => {
+          console.log('📡 Properties API Response status:', response.status);
+          if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+          }
+          return response.json();
+        })
+        .then(data => {
+          console.log('✅ Properties API Response data received');
+          if (data.status === 'success' && data.data && data.data.properties) {
+            const properties = data.data.properties;
+            console.log('📋 Found', properties.length, 'properties to process');
+
+            // Count properties by type
+            properties.forEach(property => {
+              const propertyType = property.type || property.propertyType;
+              console.log('🔍 Processing property type:', propertyType);
+
+              switch(propertyType) {
+                case 'house':
+                  houseCount++;
+                  break;
+                case 'apartment':
+                  apartmentCount++;
+                  break;
+                case 'commercial':
+                  commercialCount++;
+                  break;
+                case 'land':
+                  landCount++;
+                  break;
+                case 'industrial':
+                  industrialCount++;
+                  break;
+                default:
+                  console.log('⚠️ Unknown property type:', propertyType);
+              }
+            });
+
+            // Create the final counts object
+            const categoryCounts = {
+              'house': houseCount,
+              'apartment': apartmentCount,
+              'commercial': commercialCount,
+              'land': landCount,
+              'industrial': industrialCount
+            };
+
+            console.log('📊 Final category counts:', categoryCounts);
+
+            // Update category counts in the sidebar
+            const categoryMap = {
+              'house': 'House',
+              'apartment': 'Apartment',
+              'commercial': 'Commercial',
+              'land': 'Land',
+              'industrial': 'Industrial'
+            };
+
+            // Direct DOM manipulation for guaranteed updates
+            const listItems = document.querySelectorAll('.list-cat li');
+            console.log('🎯 Found', listItems.length, 'list items to update');
+
+            listItems.forEach((listItem, index) => {
+              const anchor = listItem.querySelector('a');
+              const span = listItem.querySelector('span');
+              const anchorText = anchor ? anchor.textContent.trim() : '';
+
+              console.log(`📝 List item ${index}: "${anchorText}"`);
+
+              // Match category names with their counts
+              if (anchorText.includes('House')) {
+                if (span) {
+                  span.textContent = `(${categoryCounts.house})`;
+                  console.log(`✅ House updated to (${categoryCounts.house})`);
+                }
+              } else if (anchorText.includes('Apartment')) {
+                if (span) {
+                  span.textContent = `(${categoryCounts.apartment})`;
+                  console.log(`✅ Apartment updated to (${categoryCounts.apartment})`);
+                }
+              } else if (anchorText.includes('Commercial')) {
+                if (span) {
+                  span.textContent = `(${categoryCounts.commercial})`;
+                  console.log(`✅ Commercial updated to (${categoryCounts.commercial})`);
+                }
+              } else if (anchorText.includes('Land')) {
+                if (span) {
+                  span.textContent = `(${categoryCounts.land})`;
+                  console.log(`✅ Land updated to (${categoryCounts.land})`);
+                }
+              } else if (anchorText.includes('Industrial')) {
+                if (span) {
+                  span.textContent = `(${categoryCounts.industrial})`;
+                  console.log(`✅ Industrial updated to (${categoryCounts.industrial})`);
+                }
+              }
+            });
+
+            // Force complete visual refresh
+            const categoryWidget = document.querySelector('.posts-by-category');
+            if (categoryWidget) {
+              categoryWidget.style.display = 'none';
+              categoryWidget.offsetHeight; // Trigger reflow
+              categoryWidget.style.display = 'block';
+              console.log('🎨 Forced visual refresh of category widget');
+            }
+          } else {
+            console.error('❌ Properties API returned unexpected data format');
+          }
+        })
+        .catch(error => {
+          console.error('❌ Error fetching properties for counting:', error);
+          // Fallback: show 0 for all categories if API fails
+          const anchors = document.querySelectorAll('.list-cat a span');
+          console.log('🔄 Setting fallback counts to (0)');
+          anchors.forEach(span => {
+            if (span.textContent.match(/^\(\d+\)$/)) {
+              span.textContent = '(0)';
+            }
+          });
+        });
+    });
+  </script>
+
+</body>
+</html>

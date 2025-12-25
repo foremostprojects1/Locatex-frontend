@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="zxx">
+<head>
+    <title>Header - Real Estate HTML5 Template</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="utf-8">
+
+    <!-- External CSS libraries -->
+    <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="css/animate.min.css">
+    <link rel="stylesheet" type="text/css" href="css/bootstrap-submenu.css">
+    <link rel="stylesheet" type="text/css" href="css/bootstrap-select.min.css">
+    <link rel="stylesheet" href="css/leaflet.css" type="text/css">
+    <link rel="stylesheet" href="css/map.css" type="text/css">
+    <link rel="stylesheet" type="text/css" href="fonts/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="fonts/flaticon/font/flaticon.css">
+    <link rel="stylesheet" type="text/css" href="fonts/linearicons/style.css">
+    <link rel="stylesheet" type="text/css"  href="css/jquery.mCustomScrollbar.css">
+    <link rel="stylesheet" type="text/css"  href="css/dropzone.css">
+    <link rel="stylesheet" type="text/css"  href="css/slick.css">
+
+    <!-- Custom stylesheet -->
+    <link rel="stylesheet" type="text/css" href="css/style.css">
+    <link rel="stylesheet" type="text/css" id="style_sheet" href="css/skins/default.css">
+
+    <!-- Favicon icon -->
+    <link rel="shortcut icon" href="img/favicon.ico" type="image/x-icon" >
+
+    <!-- Google fonts -->
+    <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700%7CRoboto:300,400,500,700&display=swap">
+
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <link rel="stylesheet" type="text/css" href="css/ie10-viewport-bug-workaround.css">
+
+    <style>
+        /* Unified Spacing for Top Header and Navbar */
+        .main-header .container,
+        .top-header .container {
+            max-width: 100%;
+            padding-left: 15px;
+            padding-right: 15px;
+        }
+
+        /* Top header - reduced height */
+        .top-header {
+            padding: 3px 0;  /* was 5px, reduced */
+            font-size: 15px; /* slightly smaller text */
+        }
+
+        .list-inline a {
+            font-size: 14px;
+            margin-right: 25px; /* reduced spacing */
+        }
+
+        .top-social-media .sign-in {
+            font-size: 14px;
+            padding: 6px 14px;  /* reduced height */
+            margin: 0 1px;     /* reduced from 2px to 1px */
+            border-radius: 20px;
+        }
+
+        /* Logout button styling */
+        .top-social-media .logout-btn {
+            font-size: 14px;
+            padding: 6px 14px;
+            margin: 0 1px;
+            border-radius: 20px;
+            background-color: #dc3545;
+            color: #fff;
+            border: 1px solid #dc3545;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+            line-height: 1.4;
+            vertical-align: middle;
+            align-self: center;
+        }
+
+        .top-social-media .logout-btn:hover {
+            background-color: #c82333;
+            border-color: #bd2130;
+            color: #fff;
+        }
+
+        /* Navbar - reduced height, bigger font */
+        .navbar {
+            padding: 6px 0; /* was 8px, reduced further */
+        }
+
+        .navbar-nav .nav-link {
+            font-size: 19px; /* increased from 18px */
+            font-weight: 600;
+            padding: 8px 16px; /* was 10px 18px, reduced */
+            margin: 0 2px;
+            border-radius: 6px;
+            transition: all 0.3s ease;
+        }
+
+        .navbar-nav .nav-link:hover {
+            background-color: #f8f9fa;
+            color: #007bff;
+            transform: translateY(-1px);
+        }
+
+        .navbar-nav .nav-item.active .nav-link {
+            background-color: #007bff;
+            color: #fff;
+            box-shadow: 0 4px 12px rgba(0,123,255,0.3);
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .top-header .container,
+            .main-header .container {
+                padding-left: 10px;
+                padding-right: 10px;
+            }
+
+            .top-header {
+                font-size: 14px;
+                padding: 2px 0;
+            }
+
+            .navbar-nav .nav-link {
+                font-size: 17px;  /* slightly smaller for mobile */
+                padding: 8px 15px;
+            }
+
+            .list-inline a {
+                font-size: 13px;
+                margin-right: 18px;
+            }
+        }
+
+        .navbar-nav .nav-link {
+            font-weight: bold;
+        }
+
+        /* Enhanced Logo Styling */
+        .navbar-brand.logos img {
+            height: 60px;
+            width: auto;
+            transition: all 0.3s ease;
+        }
+
+        .navbar-brand.logos:hover img {
+            transform: scale(1.05);
+        }
+
+        /* Center Navigation Items */
+        .navbar-nav.header-ml {
+            width: 100%;
+            justify-content: center;
+            display: flex;
+        }
+
+        .navbar-nav.header-ml .nav-item {
+            flex: none;
+        }
+
+        /* Enhanced Submit Property Button */
+        .navbar-nav.ml-auto .nav-link.link-btn {
+            padding: 10px 25px;
+            font-size: 16px;
+            font-weight: 600;
+            border-radius: 25px;
+            background-color: transparent;
+            color: #274abb;
+            border: 2px solid #274abb;
+            transition: all 0.3s ease;
+            white-space: nowrap;
+        }
+
+        .navbar-nav.ml-auto .nav-link.link-btn:hover {
+            background-color: #274abb;
+            border-color: #274abb;
+            color: #fff;
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(0, 123, 255, 0.3);
+        }
+
+    </style>
+
+
+    <!-- Just for debugging purposes. Don't actually copy these 2 lines! -->
+    <!--[if lt IE 9]><script src="js/ie8-responsive-file-warning.js"></script><![endif]-->
+    <script src="js/ie-emulation-modes-warning.js"></script>
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+    <script src="js/html5shiv.min.js"></script>
+    <script src="js/respond.min.js"></script>
+    <![endif]-->
+</head>
+<body>
+<div class="page_loader"></div>
+
+    <script>
+        // Authentication check and management
+        document.addEventListener('DOMContentLoaded', function() {
+            // Small delay to ensure localStorage is populated and DOM is ready
+            setTimeout(function() {
+                checkAuthStatus();
+            }, 200);
+        });
+
+        function checkAuthStatus() {
+            // Enhanced token checking - check multiple possible token names
+            const token = localStorage.getItem('auth_token') ||
+                         localStorage.getItem('token') ||
+                         localStorage.getItem('user_token');
+
+            const loginRegisterSection = document.getElementById('loginRegisterSection');
+            const loginRegisterSection2 = document.getElementById('loginRegisterSection2');
+            const logoutSection = document.getElementById('logoutSection');
+
+            // Check if DOM elements exist
+            if (!loginRegisterSection && !loginRegisterSection2 && !logoutSection) {
+                console.warn('Authentication UI elements not found');
+                return;
+            }
+
+            console.log('Auth check - Token found:', !!token);
+            console.log('Available tokens:', {
+                auth_token: !!localStorage.getItem('auth_token'),
+                token: !!localStorage.getItem('token'),
+                user_token: !!localStorage.getItem('user_token'),
+                current_user: !!localStorage.getItem('current_user')
+            });
+
+            if (token) {
+                // User is logged in - show logout, hide login/register
+                if (loginRegisterSection) loginRegisterSection.style.display = 'none';
+                if (loginRegisterSection2) loginRegisterSection2.style.display = 'none';
+                if (logoutSection) logoutSection.style.display = 'inline-block';
+                console.log('User logged in - showing logout');
+            } else {
+                // User is not logged in - show login/register, hide logout
+                if (loginRegisterSection) loginRegisterSection.style.display = 'inline-block';
+                if (loginRegisterSection2) loginRegisterSection2.style.display = 'inline-block';
+                if (logoutSection) logoutSection.style.display = 'none';
+                console.log('User not logged in - showing login/register');
+            }
+        }
+
+        function handleLogout() {
+            // Remove authentication tokens (match my-profile.html)
+            localStorage.removeItem('auth_token');
+            localStorage.removeItem('token');
+            localStorage.removeItem('current_user');
+            localStorage.removeItem('profile_complete');
+
+            // Show success message
+            alert('You have been successfully logged out!');
+
+            // Refresh the page to update UI
+            window.location.reload();
+        }
+
+        // Optional: Check auth status periodically (every 30 seconds)
+        setInterval(checkAuthStatus, 30000);
+
+        // Global function to manually trigger auth check (can be called from other pages)
+        window.refreshAuthStatus = function() {
+            checkAuthStatus();
+        };
+
+        // Also check auth status when storage changes (for cross-tab synchronization)
+        window.addEventListener('storage', function(e) {
+            if (e.key === 'auth_token' || e.key === 'token' || e.key === 'current_user') {
+                console.log('Storage changed, rechecking auth status');
+                checkAuthStatus();
+            }
+        });
+
+        // Debug function for troubleshooting (can be called from console)
+        window.debugAuthStatus = function() {
+            console.log('Debug Auth Status:');
+            console.log('auth_token:', localStorage.getItem('auth_token'));
+            console.log('token:', localStorage.getItem('token'));
+            console.log('current_user:', localStorage.getItem('current_user'));
+            console.log('DOM Elements:');
+            console.log('loginRegisterSection:', document.getElementById('loginRegisterSection'));
+            console.log('loginRegisterSection2:', document.getElementById('loginRegisterSection2'));
+            console.log('logoutSection:', document.getElementById('logoutSection'));
+        };
+    </script>
+
+<!-- Top header start -->
+<header class="top-header top-header-bg none-992" id="top-header-2">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-6 col-md-8 col-sm-7">
+                <div class="list-inline">
+                    <a href="tel:1-8X0-666-8X88"><i class="fa fa-phone"></i>Need Support? 1-8X0-666-8X88</a>
+                    <a href="tel:info@themevessel.com"><i class="fa fa-envelope"></i>info@themevessel.com</a>
+                </div>
+            </div>
+            <div class="col-lg-6 col-md-4 col-sm-5">
+                <ul class="top-social-media pull-right" id="authButtons">
+                    <li id="loginRegisterSection">
+                        <a href="login.html" class="sign-in"><i class="fa fa-sign-in"></i> Login</a>
+                    </li>
+                    <li id="loginRegisterSection2">
+                        <a href="signup.html" class="sign-in"><i class="fa fa-user"></i> Register</a>
+                    </li>
+                    <li id="logoutSection" style="display: none;">
+                        <a href="#" class="logout-btn" onclick="handleLogout()"><i class="fa fa-sign-out"></i> Logout</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</header>
+
+<!-- Main header start -->
+<header class="main-header">
+    <div class="container">
+        <nav class="navbar navbar-expand-lg navbar-light">
+            <a class="navbar-brand logos" href="index.html">
+                <img src="img/logos/logo.png" alt="logo">
+            </a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav header-ml">
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="properties-list-rightside.html">Properties</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="about.html">About Us</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="contact.html">Contact</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="my-profile.html">Profile</a>
+                    </li>
+                </ul>
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item">
+                        <a href="submit-property.html" class="nav-link link-btn">Submit Property</a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+    </div>
+</header>
+</body>
+</html>

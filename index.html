@@ -1,0 +1,1096 @@
+<!DOCTYPE html>
+<html lang="zxx">
+<head>
+    <title>Housy - Real Estate HTML5 Template</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="utf-8">
+
+    <!-- External CSS libraries -->
+    <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="css/animate.min.css">
+    <link rel="stylesheet" type="text/css" href="css/bootstrap-submenu.css">
+    <link rel="stylesheet" type="text/css" href="css/bootstrap-select.min.css">
+    <link rel="stylesheet" href="css/leaflet.css" type="text/css">
+    <link rel="stylesheet" href="css/map.css" type="text/css">
+    <link rel="stylesheet" type="text/css" href="fonts/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="fonts/flaticon/font/flaticon.css">
+    <link rel="stylesheet" type="text/css" href="fonts/linearicons/style.css">
+    <link rel="stylesheet" type="text/css"  href="css/jquery.mCustomScrollbar.css">
+    <link rel="stylesheet" type="text/css"  href="css/dropzone.css">
+    <link rel="stylesheet" type="text/css"  href="css/slick.css">
+
+    <!-- Custom stylesheet -->
+    <link rel="stylesheet" type="text/css" href="css/style.css">
+    <link rel="stylesheet" type="text/css" id="style_sheet" href="css/skins/default.css">
+
+    <!-- Favicon icon -->
+    <link rel="shortcut icon" href="img/favicon.ico" type="image/x-icon" >
+
+    <!-- Google fonts -->
+    <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700%7CRoboto:300,400,500,700&display=swap">
+
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <link rel="stylesheet" type="text/css" href="css/ie10-viewport-bug-workaround.css">
+
+    <!-- Just for debugging purposes. Don't actually copy these 2 lines! -->
+    <!--[if lt IE 9]><script src="js/ie8-responsive-file-warning.js"></script><![endif]-->
+    <script src="js/ie-emulation-modes-warning.js"></script>
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+    <script src="js/html5shiv.min.js"></script>
+    <script src="js/respond.min.js"></script>
+    <![endif]-->
+</head>
+<body>
+<div class="page_loader"></div>
+
+<!-- Header Include -->
+<div id="header-container"></div>
+
+<script>
+    // Load header.html content
+    fetch('header.html')
+        .then(response => response.text())
+        .then(data => {
+            document.getElementById('header-container').innerHTML = data;
+        })
+        .catch(error => {
+            console.error('Error loading header:', error);
+        });
+</script>
+
+<!-- Banner start -->
+<style>
+  /* Banner carousel styling - no arrows needed for auto-slideshow */
+  #banner .carousel {
+    position: relative;
+  }
+
+  #banner .carousel-inner {
+    border-radius: 0;
+  }
+
+  #banner .carousel-item {
+    transition: transform 0.6s ease-in-out;
+  }
+
+  #banner .carousel-caption {
+    background: linear-gradient(135deg, rgba(0,0,0,0.3) 0%, rgba(0,0,0,0.1) 100%);
+    border-radius: 0;
+  }
+</style>
+<!-- Banner -->
+<div class="banner" id="banner">
+    <div id="bannerCarousole" class="carousel slide" data-bs-ride="carousel" data-bs-interval="5000" data-bs-wrap="true">
+        <div class="carousel-inner">
+            <div class="carousel-item banner-max-height item-bg active">
+                <img class="d-block w-100 h-100" src="img\homepageland1.jpg" alt="banner">
+                <div class="carousel-caption banner-slider-inner d-flex h-100 text-center">
+                    <div class="carousel-content container">
+                        <div class="text-center">
+                            <div class="text-sections">
+                                <h3 class="text-uppercase">Your Dream Land Investment</h3>
+                                <p>Discover prime land opportunities with our innovative stress-free approach to finding your perfect property investment.</p>
+                            </div>
+                            <div class="btn-sections">
+                                <a href="#" class="btn btn-lg btn-theme">Get Started Now</a>
+                                <a href="#" class="btn btn-lg btn-white-lg-outline">Learn More</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="carousel-item banner-max-height item-bg">
+                <img class="d-block w-100 h-100" src="img\homepageland2.jpg" alt="banner">
+                <div class="carousel-caption banner-slider-inner d-flex h-100 text-center">
+                    <div class="carousel-content container">
+                        <div class="text-center">
+                           <div class="text-sections">
+                                <h3 class="text-uppercase">Prime Land for Sale</h3>
+                               <p>Find the perfect land parcels for your development projects with our comprehensive land marketplace and expert guidance.</p>
+                            </div>
+                            <div class="btn-sections">
+                                <a href="#" class="btn btn-lg btn-theme">Get Started Now</a>
+                                <a href="#" class="btn btn-lg btn-white-lg-outline">Learn More</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="carousel-item banner-max-height item-bg">
+                <img class="d-block w-100 h-100" src="img\homepageland3.jpg" alt="banner">
+                <div class="carousel-caption banner-slider-inner d-flex h-100 text-center">
+                    <div class="carousel-content container">
+                        <div class="text-center">
+                            <div class="text-sections">
+                                <h3 class="text-uppercase">Invest in Premium Land</h3>
+                                <p>Secure your future with strategic land investments. Let our experts guide you to the most promising land opportunities.</p>
+                            </div>
+                            <div class="btn-sections">
+                                <a href="#" class="btn btn-lg btn-theme">Get Started Now</a>
+                                <a href="#" class="btn btn-lg btn-white-lg-outline">Learn More</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Banner Navigation Dots -->
+<div class="banner-nav-dots text-center">
+    <div class="slick-dots">
+        <button class="slick-dot active" data-slide="0" aria-label="Go to slide 1"></button>
+        <button class="slick-dot" data-slide="1" aria-label="Go to slide 2"></button>
+        <button class="slick-dot" data-slide="2" aria-label="Go to slide 3"></button>
+    </div>
+</div>
+
+<style>
+/* Banner Navigation Dots */
+.banner-nav-dots {
+    position: absolute;
+    bottom: 1px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 10;
+    pointer-events: auto;
+}
+
+.banner-nav-dots .slick-dots {
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+    align-items: center;
+}
+
+.banner-nav-dots .slick-dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    border: 2px solid rgba(255, 255, 255, 0.6);
+    background: transparent;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    padding: 0;
+    margin: 0;
+    position: relative;
+}
+
+.banner-nav-dots .slick-dot:hover {
+    border-color: rgba(255, 255, 255, 0.9);
+    background: rgba(255, 255, 255, 0.3);
+    transform: scale(1.1);
+}
+
+.banner-nav-dots .slick-dot.active {
+    background: #fff;
+    border-color: #fff;
+    transform: scale(1.2);
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+}
+
+.featured-properties,
+.featured-properties.content-area {
+    margin: 0 !important;
+    padding: 0 !important;
+}
+
+/* Services and Categories sections - Minimal gap */
+.services-2,
+.services-2.content-area-5,
+.services-2.content-area-5.bg-grea-3 {
+    margin-top: 10px !important;
+    padding-top: 0 !important;
+}
+
+.services-2.content-area-5 {
+    margin-top: 0 !important;
+    margin-bottom: 0 !important;
+    padding-top: 0 !important;
+    padding-bottom: 0 !important;
+}
+
+.categories,
+.categories.content-area-8 {
+    margin-top: 0 !important;
+    padding-top: 20px !important; /* Small internal padding */
+}
+
+/* Services Section - White background */
+.services-2.content-area-5 {
+    background: #ffffff !important; /* White background */
+    color: #333333; /* Dark text for contrast */
+}
+
+.services-2.content-area-5 .main-title h1,
+.services-2.content-area-5 .main-title p {
+    color: #333333 !important; /* Dark text for titles */
+}
+
+.services-2.content-area-5 .service-info-3 .service-detail h3,
+.services-2.content-area-5 .service-info-3 .service-detail p {
+    color: #333333 !important; /* Dark text for service items */
+}
+
+/* Categories section - Reduce gap */
+.categories,
+.categories.content-area-8,
+.categories.content-area-8.bg-grea-3 {
+    margin-top: 0 !important;
+    padding-top: 0 !important;
+}
+
+/* Our Agent section - Reduce top gap */
+.our-team-2,
+.our-team-2.content-area {
+    margin-top: 0 !important;
+    padding-top: 10px !important; /* Minimal internal padding */
+}
+
+/* Services section title - No gap */
+.services-2 .main-title {
+    margin-bottom: 0 !important; /* No gap to service items */
+    padding-bottom: 0 !important;
+    margin-top: 0 !important;
+    padding-top: 0 !important;
+}
+
+/* Services section description - Add gap */
+.services-2 .main-title p {
+    margin-bottom: 50px !important; /* Add gap after description text */
+}
+
+.services-2 .row {
+    margin-top: 0 !important;
+    margin-bottom: 0 !important;
+}
+
+.services-2 .col-lg-6 {
+    padding-top: 0 !important;
+    padding-bottom: 0 !important;
+}
+
+/* Equal height property containers */
+.featured-properties .slick-slide-item,
+.recently-properties .slick-slide-item {
+    display: flex;
+    height: 100%;
+}
+
+.featured-properties .slick-slide-item .property-box-5,
+.featured-properties .slick-slide-item .property-box-3,
+.recently-properties .slick-slide-item .property-box-5 {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    width: 100%;
+    min-height: 400px; /* Set minimum height for consistency */
+}
+
+.featured-properties .slick-slide-item .property-box-5 .detail,
+.featured-properties .slick-slide-item .property-box-3 .detail,
+.recently-properties .slick-slide-item .property-box-5 .detail {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.featured-properties .slick-slide-item .property-box-5 .properties-listing,
+.featured-properties .slick-slide-item .property-box-3 .properties-listing,
+.recently-properties .slick-slide-item .property-box-5 .properties-listing {
+    margin-top: auto;
+}
+
+/* Featured Properties Title Background Block */
+.main-title {
+    position: relative;
+    text-align: center;
+    margin-bottom: 50px;     /* Reduced bottom margin */
+    margin-top: 50px;        /* Reduce top margin */
+    height: 100px;            /* Fixed 80px height */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.main-title .title-bg-line {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: #0164b1;
+    z-index: -1;
+    opacity: 0.15;
+    width: 100vw;        /* Full viewport width */
+    margin-left: calc(50% - 50vw); /* Center alignment */
+}
+
+.main-title h1,
+.main-title p {
+    color: #333;
+    position: relative;
+    z-index: 1;
+    margin: 0;
+    line-height: 1.2;
+}
+
+.full-width-strip {
+    width: 100% !important;
+    background-color: #d9e8f4 !important;
+    padding: 20px 15px !important;
+    text-align: center !important;
+    margin: 60px 0 !important;
+}
+
+.full-width-strip h1 {
+    margin: 0 !important;
+    font-weight: 700 !important;
+    color: #222 !important;
+}
+
+.full-width-strip p {
+    margin-top: 12px !important;
+    font-size: 18px !important;
+    color: #333 !important;
+    max-width: 900px !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+}
+
+
+</style>
+
+<!-- Featured properties start -->
+<div class="featured-properties content-area">
+    <div class="container">
+        <div class="main-title">
+            <div class="title-bg-line"></div>
+            <h1>Featured Land Properties</h1>
+            <p>Browse the latest land listings from our marketplace.</p>
+        </div>
+        <div class="slick-slider-area">
+            <div id="featuredPropertiesContainer" class="row slick-carousel" data-slick='{"slidesToShow": 3, "responsive":[{"breakpoint": 1024,"settings":{"slidesToShow": 2}}, {"breakpoint": 768,"settings":{"slidesToShow": 1}}]}'></div>
+            <div class="slick-prev slick-arrow-buton">
+                <i class="fa fa-angle-left"></i>
+            </div>
+            <div class="slick-next slick-arrow-buton">
+                <i class="fa fa-angle-right"></i>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Services 2 start -->
+<div class="services-2 content-area-5 bg-grea-3">
+    <!-- Full width background strip - moved outside container for true full width -->
+    <div class="full-width-strip">
+        <div class="container">
+            <h1>Find Your Perfect Land Investment with Locatex</h1>
+            <p>Discover amazing land opportunities for sale in prime locations, with a special focus on premium land parcels tailored to your investment needs.</p>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="row wow">
+            <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12">
+                <div class="services-demo" style="height: 100%; margin-top: 30px;">
+                    <img class="img-fluid" src="img/homepage4.jpeg" alt="properties"
+                         style="width: 100%; max-height: 420px; object-fit: cover; border-radius: 8px;">
+                </div>
+            </div>
+            <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12">
+                <div class="service-info-3 mb-0" style="display: flex; align-items: center; margin-top: 30px;">
+
+                    <!-- Icon -->
+                    <div class="icon" style="flex: 0 0 auto; margin-right: 15px;">
+                        <img src="img/landicon.png" alt="Land Icon"
+                             style="width: 45px; height: 45px; display: block;">
+                    </div>
+
+                    <!-- Text -->
+                    <div class="service-detail" style="flex: 1;">
+                        <h3>Prime Land Opportunities</h3>
+                        <p style="font-size: 16px;">
+                            At Locatex, we specialize in connecting buyers and sellers with exceptional land parcels ideal
+                            for residential projects, commercial ventures, or agricultural use. Each listing is carefully curated to ensure:
+                        </p>
+
+                        <ul style="padding-left: 20px; margin: 15px 0; list-style: disc;">
+                            <li>Prime locations with excellent connectivity and growth potential.</li>
+                            <li>Clear and verified documentation for complete peace of mind.</li>
+                            <li>End-to-end support from site visits to legal compliance.</li>
+                        </ul>
+
+                        <p style="font-size: 16px;">
+                            Whether you're planning to build your dream home, expand your business, or invest in strategic
+                            development opportunities, Locatex makes the process simple, transparent, and hassle-free.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- Categories section temporarily commented out -->
+<!-- Categories strat -->
+<!-- <div class="categories content-area-8">
+    <div class="container">
+        
+        <div class="main-title">
+            <h1>Most Popular Places</h1>
+            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod</p>
+        </div>
+        <div class="row wow">
+            <div class="col-lg-12 col-md-12 col-sm-12">
+                <div class="row">
+                    <div class="col-lg-4 col-md-6 col-sm-6 col-pad">
+                        <div class="category">
+                            <div class="category_bg_box cat-1-bg">
+                                <div class="category-overlay">
+                                    <div class="category-content">
+                                        <h3 class="category-title">
+                                            <a href="#">Florida</a>
+                                        </h3>
+                                        <div class="category-subtitle">14 Properties</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-6 col-sm-6 col-pad">
+                        <div class="category">
+                            <div class="category_bg_box cat-2-bg">
+                                <div class="category-overlay">
+                                    <div class="category-content">
+                                        <h3 class="category-title">
+                                            <a href="#">California</a>
+                                        </h3>
+                                        <div class="category-subtitle">98 Properties</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-6 col-sm-6 col-pad">
+                        <div class="category">
+                            <div class="category_bg_box cat-6-bg">
+                                <div class="category-overlay">
+                                    <div class="category-content">
+                                        <h3 class="category-title">
+                                            <a href="#">New York</a>
+                                        </h3>
+                                        <div class="category-subtitle">98 Properties</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-8 col-md-8 col-sm-6 col-pad none-992">
+                        <div class="category">
+                            <div class="category_bg_box cat-3-bg">
+                                <div class="category-overlay">
+                                    <div class="category-content">
+                                        <h3 class="category-title">
+                                            <a href="#">London</a>
+                                        </h3>
+                                        <div class="category-subtitle">98 Properties</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-6 col-sm-6 col-pad">
+                        <div class="category">
+                            <div class="category_bg_box cat-5-bg">
+                                <div class="category-overlay">
+                                    <div class="category-content">
+                                        <h3 class="category-title">
+                                            <a href="#">Australia</a>
+                                        </h3>
+                                        <div class="category-subtitle">98 Properties</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div> -->
+
+
+<!-- Counters start -->
+<div class="counters" style="background-image: url('img/homepage5.jpg'); background-size: cover; background-position: center; background-repeat: no-repeat; margin-top: 80px;">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-6 col-md-6 col-sm-12">
+                <div class="media counter-box">
+                    <div class="media-left">
+                        <i class="flaticon-business"></i>
+                    </div>
+                    <div class="media-body">
+                        <h1 class="counter">1276</h1>
+                        <p>Land Listings For Sale</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6 col-md-6 col-sm-12">
+                <div class="media counter-box">
+                    <div class="media-left">
+                        <i class="flaticon-people-1"></i>
+                    </div>
+                    <div class="media-body">
+                        <h1 class="counter">177</h1>
+                        <p>Computer Brokers</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Our team 2 start -->
+<!-- <div class="our-team-2 content-area">
+    <div class="container">
+        <div class="main-title">
+            <h1>Our Agent</h1>
+            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod</p>
+        </div>
+        <div class="slick-slider-area">
+            <div class="row slick-carousel" data-slick='{"slidesToShow": 4, "responsive":[{"breakpoint": 1024,"settings":{"slidesToShow": 2}}, {"breakpoint": 768,"settings":{"slidesToShow": 1}}]}'>
+                <div class="slick-slide-item">
+                    <div class="team-1">
+                        <div class="team-photo">
+                            <a href="#">
+                                <img src="img/avatar/avatar-7.png" alt="agent-2" class="img-fluid">
+                            </a>
+                        </div>
+                        <div class="team-details">
+                            <h5><a href="agent-detail.html">Martin Smith</a></h5>
+                            <h6>Web Developer</h6>
+                            <ul class="social-list clearfix">
+                                <li><a href="#" class="facebook"><i class="fa fa-facebook"></i></a></li>
+                                <li><a href="#" class="twitter"><i class="fa fa-twitter"></i></a></li>
+                                <li><a href="#" class="instagram"><i class="fa fa-instagram"></i></a></li>
+                                <li><a href="#" class="linkedin"><i class="fa fa-linkedin"></i></a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="slick-slide-item">
+                    <div class="team-1">
+                        <div class="team-photo">
+                            <a href="#">
+                                <img src="img/avatar/avatar-6.png" alt="agent-2" class="img-fluid">
+                            </a>
+                        </div>
+                        <div class="team-details">
+                            <h5><a href="agent-detail.html">John Pitarshon</a></h5>
+                            <h6>Creative Director</h6>
+                            <ul class="social-list clearfix">
+                                <li><a href="#" class="facebook"><i class="fa fa-facebook"></i></a></li>
+                                <li><a href="#" class="twitter"><i class="fa fa-twitter"></i></a></li>
+                                <li><a href="#" class="instagram"><i class="fa fa-instagram"></i></a></li>
+                                <li><a href="#" class="linkedin"><i class="fa fa-linkedin"></i></a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="slick-slide-item">
+                    <div class="team-1">
+                        <div class="team-photo">
+                            <a href="#">
+                                <img src="img/avatar/avatar-5.png" alt="agent-2" class="img-fluid">
+                            </a>
+                        </div>
+                        <div class="team-details">
+                            <h5><a href="#">Karen Paran</a></h5>
+                            <h6>Support Manager</h6>
+                            <ul class="social-list clearfix">
+                                <li><a href="#" class="facebook"><i class="fa fa-facebook"></i></a></li>
+                                <li><a href="#" class="twitter"><i class="fa fa-twitter"></i></a></li>
+                                <li><a href="#" class="instagram"><i class="fa fa-instagram"></i></a></li>
+                                <li><a href="#" class="linkedin"><i class="fa fa-linkedin"></i></a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="slick-slide-item">
+                    <div class="team-1">
+                        <div class="team-photo">
+                            <a href="#">
+                                <img src="img/avatar/avatar-8.png" alt="agent-2" class="img-fluid">
+                            </a>
+                        </div>
+                        <div class="team-details">
+                            <h5><a href="agent-detail.html">Maria Blank</a></h5>
+                            <h6>Office Manager</h6>
+                            <ul class="social-list clearfix">
+                                <li><a href="#" class="facebook"><i class="fa fa-facebook"></i></a></li>
+                                <li><a href="#" class="twitter"><i class="fa fa-twitter"></i></a></li>
+                                <li><a href="#" class="instagram"><i class="fa fa-instagram"></i></a></li>
+                                <li><a href="#" class="linkedin"><i class="fa fa-linkedin"></i></a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="slick-slide-item">
+                    <div class="team-1">
+                        <div class="team-photo">
+                            <a href="#">
+                                <img src="img/avatar/avatar-5.png" alt="agent-2" class="img-fluid">
+                            </a>
+                        </div>
+                        <div class="team-details">
+                            <h5><a href="#">Karen Paran</a></h5>
+                            <h6>Support Manager</h6>
+                            <ul class="social-list clearfix">
+                                <li><a href="#" class="facebook"><i class="fa fa-facebook"></i></a></li>
+                                <li><a href="#" class="twitter"><i class="fa fa-twitter"></i></a></li>
+                                <li><a href="#" class="instagram"><i class="fa fa-instagram"></i></a></li>
+                                <li><a href="#" class="linkedin"><i class="fa fa-linkedin"></i></a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div> -->
+
+<!-- Footer start -->
+<div id="footer-container" style="margin-top: 80px;"></div>
+
+<script>
+    // Load footer.html content
+    fetch('footer.html')
+        .then(response => response.text())
+        .then(data => {
+            document.getElementById('footer-container').innerHTML = data;
+        })
+        .catch(error => {
+            console.error('Error loading footer:', error);
+        });
+</script>
+
+<script src="js/jquery-2.2.0.min.js"></script>
+<script src="js/popper.min.js"></script>
+<script src="js/bootstrap.min.js"></script>
+<script src="js/bootstrap-submenu.js"></script>
+<script src="js/rangeslider.js"></script>
+<script src="js/jquery.mb.YTPlayer.js"></script>
+<script src="js/wow.min.js"></script>
+<script src="js/bootstrap-select.min.js"></script>
+<script src="js/jquery.easing.1.3.js"></script>
+<script src="js/jquery.scrollUp.js"></script>
+<script src="js/jquery.mCustomScrollbar.concat.min.js"></script>
+<script src="js/leaflet.js"></script>
+<script src="js/leaflet-providers.js"></script>
+<script src="js/leaflet.markercluster.js"></script>
+<script src="js/dropzone.js"></script>
+<script src="js/slick.min.js"></script>
+<script src="js/jquery.filterizr.js"></script>
+<script src="js/jquery.magnific-popup.min.js"></script>
+<script src="js/jquery.countdown.js"></script>
+<script src="js/maps.js"></script>
+<script src="js/app.js"></script>
+
+<!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+<script src="js/ie10-viewport-bug-workaround.js"></script>
+
+  <style>
+    /* Ensure property cards are always clickable */
+    .slick-carousel .slick-slide-item .property-img,
+    .slick-carousel .slick-slide-item .property-img a,
+    .slick-carousel .slick-slide-item .title a,
+    .slick-carousel .slick-slide-item .location a {
+      pointer-events: auto !important;
+      cursor: pointer !important;
+      user-select: text !important;
+      -webkit-touch-callout: default !important;
+    }
+
+    .slick-carousel .slick-slide-item .property-img img {
+      pointer-events: auto !important;
+    }
+
+    /* Override any slick dragging states that might prevent clicks */
+    .slick-carousel .slick-slide.dragging .property-img,
+    .slick-carousel .slick-slide.dragging .property-img a {
+      pointer-events: auto !important;
+    }
+  </style>
+  <script>
+    (function(){
+      var API_BASE = 'http://localhost:5000';
+      function fmtPrice(v){
+        if(typeof v === 'number'){ return '₹' + v.toLocaleString(); }
+        if(!v) return '';
+        var n = parseFloat(v); return isNaN(n) ? '' : ('₹' + n.toLocaleString());
+      }
+      function propCard(p){
+        var title = p.title || 'Property';
+        var price = fmtPrice(p.price);
+        var status = p.status || 'for-sale';
+        var tagClass = /rent/i.test(status) ? '' : ' bg-active';
+        var loc = (p.location && p.location.city && p.location.state) ? 
+                  [p.location.city, p.location.state].filter(Boolean).join(', ') : '';
+        var area = p.totalArea ? p.totalArea + ' sq ft' : '';
+        var beds = p.bhk ? p.bhk + ' Beds' : '';
+        var baths = p.bathrooms ? p.bathrooms + ' Baths' : '';
+        var img = (p.images && p.images.length > 0) ? p.images[0].url : 'img/properties/properties-1.png';
+
+        // Debug: Log the property ID to see if it exists
+        console.log('Property ID:', p._id, 'Title:', title);
+
+        // Use _id if available, otherwise use a fallback
+        var propertyId = p._id || p.id || 'property-' + Math.random().toString(36).substr(2, 9);
+        var href = 'properties-details.html' + (propertyId ? ('?id=' + propertyId) : '');
+        console.log('Generated href:', href);
+
+        return `
+          <div class="slick-slide-item">
+            <div class="property-box-3">
+              <div class="property-thumbnail">
+                <a href="${href}" class="property-img" style="display: block; cursor: pointer; pointer-events: auto; user-select: text; -webkit-touch-callout: default;">
+                  <div class="tag-2${tagClass}">${status.replace('-', ' ').toUpperCase()}</div>
+                  <img class="d-block w-100" src="${img}" alt="property" style="pointer-events: auto;">
+                  <div class="facilities-list">
+                    <ul>
+                      ${area ? `<li><i class="flaticon-square"></i> ${area}</li>` : ''}
+                      ${beds ? `<li><i class="flaticon-furniture"></i> ${beds}</li>` : ''}
+                      ${baths ? `<li><i class="flaticon-holidays"></i> ${baths}</li>` : ''}
+                    </ul>
+                  </div>
+                </a>
+              </div>
+              <div class="details">
+                <div class="top">
+                  <h1 class="title">
+                    <a href="${href}" style="cursor: pointer; pointer-events: auto; user-select: text; -webkit-touch-callout: default;">${title}</a>
+                    <span>${price || ''}</span>
+                  </h1>
+                  <div class="location">
+                    <a href="${href}" tabindex="0" style="cursor: pointer; pointer-events: auto; user-select: text; -webkit-touch-callout: default;">
+                      <i class="fa fa-map-marker"></i>${loc || ''}
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>`;
+      }
+
+      function seeMoreCard(){
+        return `
+          <div class="slick-slide-item">
+            <a href="properties-list-rightside.html" class="d-block w-100" style="text-decoration:none;">
+              <div class="property-box-3" style="height:100%;display:flex;align-items:center;justify-content:center;min-height:280px;">
+                <div style="text-align:center;">
+                  <div style="font-size:28px;font-weight:700;">See More</div>
+                  <div style="color:#666;">Browse all properties</div>
+                </div>
+              </div>
+            </a>
+          </div>`;
+      }
+
+      function tryFetch(url, timeout = 10000){ 
+        console.log('tryFetch called with:', url, typeof url);
+        return Promise.race([
+          fetch(url).then(function(r){ return r.json(); }),
+          new Promise((_, reject) => setTimeout(() => reject(new Error('Request timeout')), timeout))
+        ]);
+      }
+
+      function initFeatured(){
+        console.log('initFeatured called');
+        var el = document.getElementById('featuredPropertiesContainer');
+        if(!el) {
+          console.error('Container element not found');
+          return;
+        }
+        console.log('Container found:', el);
+        var url = API_BASE + '/api/properties?limit=6&page=1&sort=new&isPublished=true&approvalStatus=approved';
+        console.log('Fetching URL:', url, typeof url);
+        tryFetch(url)
+          .then(function(res){
+            console.log('Response:', res);
+            var items = (res && res.data && res.data.properties) || [];
+            if(!Array.isArray(items)) items = [];
+            console.log('Items count:', items.length);
+            if(items.length === 0) {
+              console.log('No items to display');
+              el.innerHTML = '<div style="text-align:center;padding:40px;">No properties available</div>';
+              return;
+            }
+            el.innerHTML = items.map(propCard).join('') + seeMoreCard();
+            console.log('HTML generated, initializing slick...');
+            // Ensure container has correct classes
+            el.className = 'row slick-carousel';
+            el.setAttribute('data-slick', '{"slidesToShow": 3, "responsive":[{"breakpoint": 1024,"settings":{"slidesToShow": 2}}, {"breakpoint": 768,"settings":{"slidesToShow": 1}}]}');
+            
+            // Force reflow
+            el.style.display = 'none';
+            el.offsetHeight; // trigger reflow
+            el.style.display = '';
+            
+            // Initialize or refresh slick
+            var $el = window.jQuery ? window.jQuery(el) : null;
+            if($el){
+              console.log('jQuery found, initializing slick...');
+              if($el.hasClass('slick-initialized')){ 
+                console.log('Refreshing existing slick...');
+                $el.slick('refresh'); 
+              } else { 
+                console.log('Creating new slick...');
+                $el.slick({ 
+                  slidesToShow: 3, 
+                  slidesToScroll: 1,
+                  arrows: false, // Hide navigation arrows
+                  dots: false,
+                  infinite: false, // Disable infinite loop
+                  responsive:[{breakpoint:1024, settings:{slidesToShow:2}}, {breakpoint:768, settings:{slidesToShow:1}}],
+                  // Ensure clicks work properly
+                  waitForAnimate: false
+                }); 
+              }
+              console.log('Slick initialized successfully');
+
+              // Ensure clicks work on anchor tags within slick carousel
+              $el.off('click.slickClick').on('click.slickClick', '.slick-slide', function(e) {
+                var $link = $(this).find('a').first();
+                if ($link.length && $link.attr('href') && !$link.attr('href').startsWith('#')) {
+                  console.log('Slick slide clicked, navigating to:', $link.attr('href'));
+                  window.location.href = $link.attr('href');
+                  return false;
+                }
+              });
+
+              // Also handle direct clicks on anchor tags
+              $el.off('click.anchorClick').on('click.anchorClick', 'a', function(e) {
+                var href = $(this).attr('href');
+                if (href && !href.startsWith('#')) {
+                  console.log('Anchor clicked:', href);
+                  window.location.href = href;
+                  return false;
+                }
+              });
+            } else {
+              console.error('jQuery not found, cannot initialize slick');
+              // Fallback: show without slick
+              console.log('Fallback: showing properties without slick');
+              el.style.display = 'flex';
+              el.style.flexWrap = 'wrap';
+              el.style.justifyContent = 'center';
+              el.style.gap = '20px';
+            }
+          })
+          .catch(function(err){ 
+            console.error('Fetch error:', err);
+          });
+      }
+
+      if(document.readyState === 'complete' || document.readyState === 'interactive'){
+        // Wait for jQuery to be loaded
+        var checkJQuery = function() {
+          if(typeof window.jQuery !== 'undefined' && window.jQuery.fn && window.jQuery.fn.slick) {
+            console.log('jQuery and Slick are loaded');
+            setTimeout(initFeatured, 100);
+          } else {
+            console.log('Waiting for jQuery/Slick...');
+            setTimeout(checkJQuery, 100);
+          }
+        };
+        checkJQuery();
+      } else {
+        document.addEventListener('DOMContentLoaded', function() {
+          var checkJQuery = function() {
+            if(typeof window.jQuery !== 'undefined' && window.jQuery.fn && window.jQuery.fn.slick) {
+              console.log('jQuery and Slick are loaded');
+              setTimeout(initFeatured, 100);
+            } else {
+              console.log('Waiting for jQuery/Slick...');
+              setTimeout(checkJQuery, 100);
+            }
+          };
+          checkJQuery();
+        });
+      }
+    })();
+  </script>
+
+  <!-- Banner Navigation Dots JavaScript -->
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      // Wait for Bootstrap to be loaded
+      const initBannerDots = function() {
+        const carousel = document.getElementById('bannerCarousole');
+        const dots = document.querySelectorAll('.banner-nav-dots .slick-dot');
+
+        if (!carousel || dots.length === 0) {
+          console.log('Banner carousel or dots not found, retrying...');
+          setTimeout(initBannerDots, 100);
+          return;
+        }
+
+        console.log('Initializing banner carousel and dots...');
+
+        // Initialize carousel with proper configuration
+        let carouselInstance = bootstrap.Carousel.getInstance(carousel);
+        if (!carouselInstance) {
+          carouselInstance = new bootstrap.Carousel(carousel, {
+            interval: 5000,
+            ride: 'carousel',
+            wrap: true,
+            pause: false
+          });
+          console.log('Carousel instance created with 5-second interval');
+        }
+
+        // Handle dot clicks
+        dots.forEach((dot, index) => {
+          dot.addEventListener('click', function() {
+            const slideIndex = parseInt(this.getAttribute('data-slide'));
+            console.log('Dot clicked, going to slide:', slideIndex);
+
+            // Remove active class from all dots
+            dots.forEach(d => d.classList.remove('active'));
+
+            // Add active class to clicked dot
+            this.classList.add('active');
+
+            // Go to specific slide
+            carouselInstance.to(slideIndex);
+          });
+        });
+
+        // Update active dot when carousel slides automatically
+        carousel.addEventListener('slid.bs.carousel', function(e) {
+          const activeSlide = e.to;
+          console.log('Slide changed to:', activeSlide);
+
+          // Remove active class from all dots
+          dots.forEach(d => d.classList.remove('active'));
+
+          // Add active class to corresponding dot
+          if (dots[activeSlide]) {
+            dots[activeSlide].classList.add('active');
+          }
+        });
+
+        // Set initial active dot based on current slide
+        const initialActiveSlide = carousel.querySelector('.carousel-item.active');
+        if (initialActiveSlide) {
+          const initialIndex = Array.from(initialActiveSlide.parentElement.children).indexOf(initialActiveSlide);
+          if (dots[initialIndex]) {
+            dots.forEach(d => d.classList.remove('active'));
+            dots[initialIndex].classList.add('active');
+          }
+        }
+
+        console.log('Banner carousel and dots initialized successfully');
+      };
+
+      // Start initialization
+      initBannerDots();
+    });
+  </script>
+
+  <!-- Fallback JavaScript for Banner Dots (if Bootstrap fails) -->
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      // Fallback initialization after a delay
+      setTimeout(function() {
+        const carousel = document.getElementById('bannerCarousole');
+        const carouselItems = carousel.querySelectorAll('.carousel-item');
+        const dots = document.querySelectorAll('.banner-nav-dots .slick-dot');
+
+        if (carouselItems.length === 0 || dots.length === 0) {
+          console.log('Fallback: Carousel items or dots not found');
+          return;
+        }
+
+        console.log('Fallback banner dots initialized');
+
+        // Manual slideshow functionality
+        let currentSlide = 0;
+        const totalSlides = carouselItems.length;
+
+        // Auto-advance slides every 5 seconds
+        const autoAdvance = function() {
+          currentSlide = (currentSlide + 1) % totalSlides;
+
+          // Hide all carousel items
+          carouselItems.forEach(item => {
+            item.classList.remove('active');
+            item.style.opacity = '0';
+            item.style.transform = 'translateX(100%)';
+          });
+
+          // Show current carousel item
+          if (carouselItems[currentSlide]) {
+            carouselItems[currentSlide].classList.add('active');
+            carouselItems[currentSlide].style.opacity = '1';
+            carouselItems[currentSlide].style.transform = 'translateX(0%)';
+          }
+
+          // Update dots
+          dots.forEach(d => d.classList.remove('active'));
+          if (dots[currentSlide]) {
+            dots[currentSlide].classList.add('active');
+          }
+
+          console.log('Auto-advanced to slide:', currentSlide);
+        };
+
+        // Start auto-advance
+        setInterval(autoAdvance, 5000);
+
+        // Handle dot clicks
+        dots.forEach((dot, index) => {
+          dot.addEventListener('click', function() {
+            currentSlide = parseInt(this.getAttribute('data-slide'));
+
+            // Hide all carousel items
+            carouselItems.forEach(item => {
+              item.classList.remove('active');
+              item.style.opacity = '0';
+              item.style.transform = 'translateX(100%)';
+            });
+
+            // Show selected carousel item
+            if (carouselItems[currentSlide]) {
+              carouselItems[currentSlide].classList.add('active');
+              carouselItems[currentSlide].style.opacity = '1';
+              carouselItems[currentSlide].style.transform = 'translateX(0%)';
+            }
+
+            // Update dots
+            dots.forEach(d => d.classList.remove('active'));
+            this.classList.add('active');
+
+            console.log('Manual navigation to slide:', currentSlide);
+          });
+        });
+
+        // Set initial state
+        carouselItems.forEach(item => {
+          item.style.transition = 'opacity 0.6s ease-in-out, transform 0.6s ease-in-out';
+        });
+
+        console.log('Fallback banner slideshow active');
+      }, 3000); // Wait 3 seconds for Bootstrap to initialize
+    });
+  </script>
+
+</body>
+</html>

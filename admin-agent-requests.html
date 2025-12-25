@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin - Agent Registration Requests</title>
+  <link rel="stylesheet" href="css/bootstrap.min.css">
+  <link rel="stylesheet" href="css/style.css">
+  <style>
+    body { background-color: #f7f7f7; }
+    .content-area { padding: 30px 0; }
+    .card { box-shadow: 0 2px 10px rgba(0,0,0,.05); }
+    .status-badge { font-size: 12px; padding: 4px 8px; border-radius: 12px; }
+    .badge-pending { background: #fff3cd; color: #856404; }
+    .table thead th { white-space: nowrap; }
+    .table td { vertical-align: middle; }
+    .toolbar .form-control { height: 38px; }
+  </style>
+</head>
+<body>
+  <nav class="navbar navbar-expand-lg navbar-light bg-white border-bottom">
+    <a class="navbar-brand" href="index.html"><img src="img/logos/logo.png" height="30" alt="logo"> Admin</a>
+    <div class="ml-auto pr-3">
+      <a href="admin-dashboard.html" class="btn btn-outline-secondary btn-sm">Dashboard</a>
+    </div>
+  </nav>
+
+  <div class="content-area">
+    <div class="container">
+      <div class="d-flex align-items-center justify-content-between mb-3">
+        <h3 class="mb-0">Agent Registration Requests</h3>
+        <div>
+          <span class="status-badge badge-pending">Pending Approval</span>
+        </div>
+      </div>
+
+      <div id="pageAlert" class="alert d-none" role="alert"></div>
+
+      <div class="card mb-3">
+        <div class="card-body">
+          <div class="row toolbar">
+            <div class="col-md-4 mb-2">
+              <input id="searchInput" class="form-control" placeholder="Search by name, email, city, company...">
+            </div>
+            <div class="col-md-3 mb-2">
+              <select id="sortSelect" class="form-control">
+                <option value="createdAt-desc">Newest first</option>
+                <option value="createdAt-asc">Oldest first</option>
+                <option value="experience-desc">Experience (high to low)</option>
+                <option value="experience-asc">Experience (low to high)</option>
+              </select>
+            </div>
+            <div class="col-md-3 mb-2">
+              <select id="limitSelect" class="form-control">
+                <option value="10">10 per page</option>
+                <option value="20">20 per page</option>
+                <option value="50">50 per page</option>
+              </select>
+            </div>
+            <div class="col-md-2 mb-2 text-right">
+              <button id="refreshBtn" class="btn btn-primary btn-block">Refresh</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="table-responsive">
+          <table class="table table-striped mb-0">
+            <thead class="thead-light">
+              <tr>
+                <th>Agent</th>
+                <th>Contact</th>
+                <th>Company</th>
+                <th>Experience</th>
+                <th>Specialties</th>
+                <th>Applied</th>
+                <th class="text-right">Actions</th>
+              </tr>
+            </thead>
+            <tbody id="requestsTbody">
+              <tr><td colspan="7" class="text-center py-4">Loading...</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="card-body d-flex justify-content-between align-items-center">
+          <div id="paginationInfo" class="text-muted small">Page 1 of 1</div>
+          <div>
+            <button id="prevPage" class="btn btn-outline-secondary btn-sm mr-2">Prev</button>
+            <button id="nextPage" class="btn btn-outline-secondary btn-sm">Next</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="confirmModal" class="modal fade" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="confirmTitle">Confirm</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body" id="confirmBody">Are you sure?</div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+          <button type="button" id="confirmYes" class="btn btn-primary">Yes</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="js/jquery-2.2.0.min.js"></script>
+  <script src="js/bootstrap.min.js"></script>
+  <script>
+    (function(){
+      var API_BASE = 'http://localhost:5000'; // change if your backend port differs
+      var token = localStorage.getItem('auth_token') || localStorage.getItem('token');
+      var page = 1;
+      var limit = 10;
+      var search = '';
+      var sort = 'createdAt-desc';
+
+      if(!token){
+        showAlert('warning', 'Please login as an Admin to view this page.');
+      }
+
+      function showAlert(type, text){
+        var box = document.getElementById('pageAlert');
+        box.className = 'alert alert-' + type;
+        box.textContent = text;
+        box.classList.remove('d-none');
+      }
+
+      function formatDate(iso){
+        try { return new Date(iso).toLocaleString(); } catch(e){ return iso || '-'; }
+      }
+
+      function renderRows(items){
+        var tbody = document.getElementById('requestsTbody');
+        if(!items || !items.length){
+          tbody.innerHTML = '<tr><td colspan="7" class="text-center py-4">No pending requests.</td></tr>';
+          return;
+        }
+        tbody.innerHTML = items.map(function(a){
+          var specialties = (a.specialties || []).slice(0,3).join(', ');
+          var languages = (a.languages || []).slice(0,3).join(', ');
+          var company = a.company || {};
+          var user = a.user || {};
+          return (
+            '<tr>'+
+              '<td>'+
+                '<div class="font-weight-bold">'+ (user.name || '-') +'</div>'+
+                '<div class="text-muted small">'+ (languages ? ('Lang: '+languages) : '') +'</div>'+
+              '</td>'+
+              '<td>'+
+                '<div>'+ (user.email || '-') +'</div>'+
+                '<div class="text-muted small">'+ (user.phone || '-') +'</div>'+
+              '</td>'+
+              '<td>'+
+                '<div>'+ (company.name || '-') +'</div>'+
+                '<div class="text-muted small">'+ (company.address || '-') +'</div>'+
+              '</td>'+
+              '<td>'+(a.experience || 0)+' yrs</td>'+
+              '<td>'+ (specialties || '-') +'</td>'+
+              '<td>'+ formatDate(a.createdAt) +'</td>'+
+              '<td class="text-right">'+
+                '<button class="btn btn-success btn-sm mr-2" data-action="approve" data-id="'+a._id+'">Approve</button>'+
+                '<button class="btn btn-outline-danger btn-sm" data-action="reject" data-id="'+a._id+'">Reject</button>'+
+              '</td>'+
+            '</tr>'
+          );
+        }).join('');
+      }
+
+      function parseSort(){
+        var parts = sort.split('-');
+        var field = parts[0];
+        var dir = parts[1] === 'asc' ? 1 : -1;
+        var map = {
+          'createdAt': { createdAt: dir },
+          'experience': { experience: dir }
+        };
+        return map[field] || { createdAt: -1 };
+      }
+
+      function buildQuery(){
+        var params = new URLSearchParams();
+        params.set('page', page);
+        params.set('limit', limit);
+        params.set('sort', sort.indexOf('experience') === 0 ? 'experience' : 'newest');
+        // Note: This endpoint is expected to return PENDING agent requests
+        // We will call the admin endpoint if available, otherwise fallback to a public one (may not include pending)
+        return params.toString();
+      }
+
+      function fetchRequests(){
+        var tbody = document.getElementById('requestsTbody');
+        tbody.innerHTML = '<tr><td colspan="7" class="text-center py-4">Loading...</td></tr>';
+
+        // Prefer admin endpoint for pending requests
+        var url = API_BASE + '/api/admin/agents/requests?' + buildQuery();
+        fetch(url, { headers: { Authorization: 'Bearer ' + (token || '') }})
+          .then(function(r){
+            if(r.status === 404){
+              // Fallback to a public list if admin endpoint not implemented
+              return fetch(API_BASE + '/api/agents?verified=false&limit='+limit+'&page='+page, { headers: { Authorization: 'Bearer ' + (token || '') }});
+            }
+            return r;
+          })
+          .then(function(r){ return r.json().catch(function(){ return { status:'error' } }) })
+          .then(function(res){
+            if(!res || res.status === 'error'){
+              showAlert('danger', (res && res.message) || 'Failed to load requests');
+              renderRows([]);
+              return;
+            }
+            var data = res.data || res;
+            var items = data.agents || data.items || [];
+            renderRows(items);
+            if(data.pagination){
+              document.getElementById('paginationInfo').textContent = 'Page '+ (data.pagination.current || page) +' of '+ (data.pagination.pages || 1);
+            }
+          })
+          .catch(function(err){
+            showAlert('danger', 'Network error: ' + err);
+            renderRows([]);
+          });
+      }
+
+      function confirmAction(title, body, onYes){
+        document.getElementById('confirmTitle').textContent = title;
+        document.getElementById('confirmBody').textContent = body;
+        var yesBtn = document.getElementById('confirmYes');
+        var handler = function(){ yesBtn.removeEventListener('click', handler); onYes(); $('#confirmModal').modal('hide'); };
+        yesBtn.addEventListener('click', handler);
+        $('#confirmModal').modal('show');
+      }
+
+      function approve(id){
+        fetch(API_BASE + '/api/admin/agents/'+id+'/approve', {
+          method: 'PUT',
+          headers: { 'Content-Type': 'application/json', Authorization: 'Bearer ' + (token || '') }
+        })
+        .then(function(r){ return r.json().catch(function(){ return { status:'error' } }) })
+        .then(function(res){
+          if(res && res.status === 'success'){
+            showAlert('success', 'Agent approved successfully');
+            fetchRequests();
+          } else {
+            showAlert('danger', (res && res.message) || 'Failed to approve');
+          }
+        })
+        .catch(function(err){ showAlert('danger', 'Network error: ' + err); });
+      }
+
+      function reject(id){
+        fetch(API_BASE + '/api/admin/agents/'+id+'/reject', {
+          method: 'PUT',
+          headers: { 'Content-Type': 'application/json', Authorization: 'Bearer ' + (token || '') }
+        })
+        .then(function(r){ return r.json().catch(function(){ return { status:'error' } }) })
+        .then(function(res){
+          if(res && res.status === 'success'){
+            showAlert('success', 'Agent rejected');
+            fetchRequests();
+          } else {
+            showAlert('danger', (res && res.message) || 'Failed to reject');
+          }
+        })
+        .catch(function(err){ showAlert('danger', 'Network error: ' + err); });
+      }
+
+      document.getElementById('requestsTbody').addEventListener('click', function(e){
+        var t = e.target;
+        var id = t.getAttribute('data-id');
+        var action = t.getAttribute('data-action');
+        if(!id || !action) return;
+        if(action === 'approve'){
+          confirmAction('Approve Agent', 'Are you sure you want to approve this agent?', function(){ approve(id); });
+        } else if(action === 'reject'){
+          confirmAction('Reject Agent', 'Are you sure you want to reject this agent?', function(){ reject(id); });
+        }
+      });
+
+      document.getElementById('refreshBtn').addEventListener('click', function(){ fetchRequests(); });
+      document.getElementById('limitSelect').addEventListener('change', function(e){ limit = parseInt(e.target.value || '10', 10); page = 1; fetchRequests(); });
+      document.getElementById('sortSelect').addEventListener('change', function(e){ sort = e.target.value; page = 1; fetchRequests(); });
+      document.getElementById('prevPage').addEventListener('click', function(){ if(page>1){ page--; fetchRequests(); }});
+      document.getElementById('nextPage').addEventListener('click', function(){ page++; fetchRequests(); });
+
+      var debounceTimer;
+      document.getElementById('searchInput').addEventListener('input', function(e){
+        clearTimeout(debounceTimer);
+        debounceTimer = setTimeout(function(){ search = e.target.value.trim(); page = 1; fetchRequests(); }, 300);
+      });
+
+      fetchRequests();
+    })();
+  </script>
+</body>
+</html>

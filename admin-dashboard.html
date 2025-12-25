@@ -1,0 +1,1015 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard - Real Estate</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        .sidebar {
+            min-height: 100vh;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+        .sidebar .nav-link {
+            color: rgba(255, 255, 255, 0.8);
+            padding: 12px 20px;
+            border-radius: 8px;
+            margin: 5px 0;
+            transition: all 0.3s;
+        }
+        .sidebar .nav-link:hover, .sidebar .nav-link.active {
+            color: white;
+            background: rgba(255, 255, 255, 0.1);
+        }
+        .main-content {
+            background-color: #f8f9fa;
+            min-height: 100vh;
+        }
+        .card {
+            border: none;
+            border-radius: 15px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        .stat-card {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+        .stat-card .card-body {
+            padding: 1.5rem;
+        }
+        .property-card {
+            transition: transform 0.2s;
+        }
+        .property-card:hover {
+            transform: translateY(-5px);
+        }
+        .status-badge {
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+        .status-pending {
+            background-color: #fff3cd;
+            color: #856404;
+        }
+        .status-approved {
+            background-color: #d4edda;
+            color: #155724;
+        }
+        .status-rejected {
+            background-color: #f8d7da;
+            color: #721c24;
+        }
+        .btn-action {
+            padding: 6px 12px;
+            font-size: 0.8rem;
+            border-radius: 6px;
+        }
+        .loader {
+            display: none;
+            text-align: center;
+            padding: 20px;
+        }
+        .spinner-border {
+            width: 3rem;
+            height: 3rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="container-fluid">
+        <div class="row">
+            <!-- Sidebar -->
+            <nav class="col-md-3 col-lg-2 d-md-block sidebar collapse">
+                <div class="position-sticky pt-3">
+                    <div class="text-center mb-4">
+                        <h4 class="text-white">
+                            <i class="fas fa-crown"></i> Admin Panel
+                        </h4>
+                    </div>
+                    <ul class="nav flex-column">
+                        <li class="nav-item">
+                            <a class="nav-link" href="my-profile.html">
+                                <i class="fas fa-arrow-left"></i> Back to Profile
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link active" href="#" onclick="showSection('dashboard')">
+                                <i class="fas fa-tachometer-alt"></i> Dashboard
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#" onclick="showSection('pending')">
+                                <i class="fas fa-clock"></i> Pending Properties
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#" onclick="showSection('all-properties')">
+                                <i class="fas fa-home"></i> All Properties
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#" onclick="showSection('agents')">
+                                <i class="fas fa-user-tie"></i> Agent Requests
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#" onclick="showSection('users')">
+                                <i class="fas fa-users"></i> Users
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#" onclick="showSection('messages')">
+                                <i class="fas fa-envelope"></i> Messages
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#" onclick="logout()">
+                                <i class="fas fa-sign-out-alt"></i> Logout
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+
+            <!-- Main content -->
+            <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4 main-content">
+                <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+                    <h1 class="h2" id="pageTitle">Dashboard</h1>
+                    <div class="btn-toolbar mb-2 mb-md-0">
+                        <div class="btn-group me-2">
+                            <button type="button" class="btn btn-sm btn-outline-secondary" onclick="refreshData()">
+                                <i class="fas fa-sync-alt"></i> Refresh
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Dashboard Section -->
+                <div id="dashboard-section">
+                    <div class="row mb-4">
+                        <div class="col-md-3">
+                            <div class="card stat-card">
+                                <div class="card-body text-center">
+                                    <i class="fas fa-home fa-2x mb-2"></i>
+                                    <h3 id="totalProperties">0</h3>
+                                    <p class="mb-0">Total Properties</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="card stat-card">
+                                <div class="card-body text-center">
+                                    <i class="fas fa-clock fa-2x mb-2"></i>
+                                    <h3 id="pendingProperties">0</h3>
+                                    <p class="mb-0">Pending Approval</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="card stat-card">
+                                <div class="card-body text-center">
+                                    <i class="fas fa-check-circle fa-2x mb-2"></i>
+                                    <h3 id="approvedProperties">0</h3>
+                                    <p class="mb-0">Approved</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="card stat-card">
+                                <div class="card-body text-center">
+                                    <i class="fas fa-users fa-2x mb-2"></i>
+                                    <h3 id="totalUsers">0</h3>
+                                    <p class="mb-0">Total Users</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3 mt-3">
+                            <div class="card stat-card">
+                                <div class="card-body text-center">
+                                    <i class="fas fa-user-tie fa-2x mb-2"></i>
+                                    <h3 id="totalAgents">0</h3>
+                                    <p class="mb-0">Total Agents</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Pending Properties Section -->
+                <div id="pending-section" style="display: none;">
+                    <div class="card">
+                        <div class="card-header">
+                            <h5 class="mb-0">
+                                <i class="fas fa-clock"></i> Pending Properties
+                            </h5>
+                        </div>
+                        <div class="card-body">
+                            <div class="loader">
+                                <div class="spinner-border text-primary" role="status">
+                                    <span class="visually-hidden">Loading...</span>
+                                </div>
+                                <p class="mt-2">Loading pending properties...</p>
+                            </div>
+                            <div id="pendingPropertiesList"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- All Properties Section -->
+                <div id="all-properties-section" style="display: none;">
+                    <div class="card">
+                        <div class="card-header">
+                            <h5 class="mb-0">
+                                <i class="fas fa-home"></i> All Properties
+                            </h5>
+                        </div>
+                        <div class="card-body">
+                            <div class="loader">
+                                <div class="spinner-border text-primary" role="status">
+                                    <span class="visually-hidden">Loading...</span>
+                                </div>
+                                <p class="mt-2">Loading all properties...</p>
+                            </div>
+                            <div id="allPropertiesList"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Users Section -->
+                <div id="users-section" style="display: none;">
+                    <div class="card">
+                        <div class="card-header">
+                            <h5 class="mb-0">
+                                <i class="fas fa-users"></i> All Users
+                            </h5>
+                        </div>
+                        <div class="card-body">
+                            <div class="loader">
+                                <div class="spinner-border text-primary" role="status">
+                                    <span class="visually-hidden">Loading...</span>
+                                </div>
+                                <p class="mt-2">Loading users...</p>
+                            </div>
+                            <div id="usersList"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Agent Requests Section -->
+                <div id="agents-section" style="display: none;">
+                    <div class="card">
+                        <div class="card-header d-flex justify-content-between align-items-center">
+                            <h5 class="mb-0">
+                                <i class="fas fa-user-tie"></i> Agent Registration Requests
+                            </h5>
+                            <button type="button" class="btn btn-sm btn-outline-secondary" onclick="loadAgentRequests()">
+                                <i class="fas fa-sync-alt"></i> Refresh
+                            </button>
+                        </div>
+                        <div class="card-body">
+                            <div class="loader">
+                                <div class="spinner-border text-primary" role="status">
+                                    <span class="visually-hidden">Loading...</span>
+                                </div>
+                                <p class="mt-2">Loading agent requests...</p>
+                            </div>
+                            <div id="agentRequestsList"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Messages Section -->
+                <div id="messages-section" style="display: none;">
+                    <div class="card">
+                        <div class="card-header d-flex justify-content-between align-items-center">
+                            <h5 class="mb-0">
+                                <i class="fas fa-envelope"></i> Contact Form Messages
+                            </h5>
+                            <button type="button" class="btn btn-sm btn-outline-secondary" onclick="loadMessages()">
+                                <i class="fas fa-sync-alt"></i> Refresh
+                            </button>
+                        </div>
+                        <div class="card-body">
+                            <div class="loader">
+                                <div class="spinner-border text-primary" role="status">
+                                    <span class="visually-hidden">Loading...</span>
+                                </div>
+                                <p class="mt-2">Loading messages...</p>
+                            </div>
+                            <div id="messagesList"></div>
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <!-- Rejection Modal -->
+    <div class="modal fade" id="rejectionModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Reject Property</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="rejectionForm">
+                        <div class="mb-3">
+                            <label for="rejectionReason" class="form-label">Rejection Reason</label>
+                            <textarea class="form-control" id="rejectionReason" rows="4" required></textarea>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-danger" onclick="confirmRejection()">Reject Property</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        let currentPropertyId = null;
+        const modal = new bootstrap.Modal(document.getElementById('rejectionModal'));
+
+        // Check authentication on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            checkAuth();
+            loadDashboard();
+        });
+
+        function checkAuth() {
+            const token = localStorage.getItem('auth_token') || localStorage.getItem('token');
+            if (!token) {
+                alert('Please login as admin to access this page.');
+                window.location.href = 'login.html';
+                return;
+            }
+
+            // Check if user is admin
+            const user = JSON.parse(localStorage.getItem('current_user') || '{}');
+            if (user.role !== 'admin') {
+                alert('Access denied. Admin privileges required.');
+                window.location.href = 'index.html';
+                return;
+            }
+        }
+
+        function showSection(section) {
+            // Hide all sections
+            document.querySelectorAll('[id$="-section"]').forEach(el => el.style.display = 'none');
+            
+            // Show selected section
+            document.getElementById(section + '-section').style.display = 'block';
+            
+            // Update page title
+            const titles = {
+                'dashboard': 'Dashboard',
+                'pending': 'Pending Properties',
+                'all-properties': 'All Properties',
+                'users': 'Users',
+                'agents': 'Agent Requests',
+                'messages': 'Contact Messages'
+            };
+            document.getElementById('pageTitle').textContent = titles[section];
+            
+            // Update active nav link
+            document.querySelectorAll('.nav-link').forEach(link => link.classList.remove('active'));
+            event.target.classList.add('active');
+            
+            // Load section data
+            switch(section) {
+                case 'dashboard':
+                    loadDashboard();
+                    break;
+                case 'pending':
+                    loadPendingProperties();
+                    break;
+                case 'all-properties':
+                    loadAllProperties();
+                    break;
+                case 'users':
+                    loadUsers();
+                    break;
+                case 'agents':
+                    loadAgentRequests();
+                    break;
+                case 'messages':
+                    loadMessages();
+                    break;
+            }
+        }
+
+        async function loadDashboard() {
+            try {
+                const response = await fetch('http://localhost:5000/api/admin/properties/stats', {
+                    headers: {
+                        'Authorization': `Bearer ${localStorage.getItem('auth_token') || localStorage.getItem('token')}`
+                    }
+                });
+
+                if (response.ok) {
+                    const data = await response.json();
+                    document.getElementById('totalProperties').textContent = data.data.totalProperties;
+                    document.getElementById('pendingProperties').textContent = data.data.approvalStatus.pending;
+                    document.getElementById('approvedProperties').textContent = data.data.approvalStatus.approved;
+                    document.getElementById('totalUsers').textContent = data.data.totalUsers;
+                }
+                // Fetch total agents (using agents list pagination total)
+                try {
+                    const agentsRes = await fetch('http://localhost:5000/api/agents?limit=1', {
+                        headers: {
+                            'Authorization': `Bearer ${localStorage.getItem('auth_token') || localStorage.getItem('token')}`
+                        }
+                    });
+                    if (agentsRes.ok) {
+                        const agentsData = await agentsRes.json();
+                        const total = (agentsData && agentsData.data && agentsData.data.pagination && agentsData.data.pagination.total) || 0;
+                        document.getElementById('totalAgents').textContent = total;
+                    }
+                } catch (e) {
+                    console.warn('Failed to load total agents');
+                }
+            } catch (error) {
+                console.error('Error loading dashboard:', error);
+            }
+        }
+
+        async function loadAgentRequests() {
+            const loader = document.querySelector('#agents-section .loader');
+            const list = document.getElementById('agentRequestsList');
+            loader.style.display = 'block';
+            list.innerHTML = '';
+
+            try {
+                // List agents with isVerified=false (pending)
+                const response = await fetch('http://localhost:5000/api/agents?verified=false&active=false&limit=50', {
+                    headers: {
+                        'Authorization': `Bearer ${localStorage.getItem('auth_token') || localStorage.getItem('token')}`
+                    }
+                });
+                loader.style.display = 'none';
+                if (!response.ok) {
+                    list.innerHTML = '<p class="text-center text-danger">Failed to load agent requests.</p>';
+                    return;
+                }
+                const res = await response.json();
+                const agents = (res && res.data && res.data.agents) || [];
+                if (!agents.length) {
+                    list.innerHTML = '<p class="text-center text-muted">No pending agent requests.</p>';
+                    return;
+                }
+                agents.forEach(agent => {
+                    const card = document.createElement('div');
+                    card.className = 'card property-card mb-3';
+                    const user = agent.user || {};
+                    const company = agent.company || {};
+                    const specialties = (agent.specialties || []).join(', ');
+                    card.innerHTML = `
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-md-8">
+                                    <h5 class="card-title">${user.name || 'Unknown'}</h5>
+                                    <p class="card-text">
+                                        <strong>Email:</strong> ${user.email || '-'} |
+                                        <strong>Phone:</strong> ${user.phone || '-'} |
+                                        <strong>Experience:</strong> ${agent.experience || 0} yrs
+                                    </p>
+                                    <p class="card-text">
+                                        <strong>Company:</strong> ${company.name || '-'} |
+                                        <strong>Address:</strong> ${company.address || '-'}
+                                    </p>
+                                    <p class="card-text">
+                                        <strong>Specialties:</strong> ${specialties || '-'}
+                                    </p>
+                                </div>
+                                <div class="col-md-4 text-end">
+                                    <span class="status-badge status-pending">Pending</span>
+                                    <div class="mt-2">
+                                        <button class="btn btn-success btn-action me-2" onclick="approveAgent('${agent._id}')">
+                                            <i class="fas fa-check"></i> Approve
+                                        </button>
+                                        <button class="btn btn-danger btn-action" onclick="rejectAgent('${agent._id}')">
+                                            <i class="fas fa-times"></i> Reject
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                    list.appendChild(card);
+                });
+            } catch (error) {
+                loader.style.display = 'none';
+                list.innerHTML = '<p class="text-center text-danger">Error loading agent requests.</p>';
+                console.error('Error:', error);
+            }
+        }
+
+        async function approveAgent(agentId) {
+            if (!confirm('Approve this agent?')) return;
+            try {
+                const response = await fetch(`http://localhost:5000/api/agents/${agentId}`, {
+                    method: 'PUT',
+                    headers: {
+                        'Authorization': `Bearer ${localStorage.getItem('auth_token') || localStorage.getItem('token')}`,
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ isVerified: true, isActive: true })
+                });
+                if (response.ok) {
+                    alert('Agent approved successfully');
+                    loadAgentRequests();
+                    loadDashboard();
+                } else {
+                    const err = await response.json().catch(()=>({message:'Unknown error'}));
+                    alert('Error: ' + (err.message || 'Failed to approve'));
+                }
+            } catch (e) {
+                alert('Network error');
+            }
+        }
+
+        async function rejectAgent(agentId) {
+            if (!confirm('Reject (delete) this agent request?')) return;
+            try {
+                const response = await fetch(`http://localhost:5000/api/agents/${agentId}`, {
+                    method: 'DELETE',
+                    headers: {
+                        'Authorization': `Bearer ${localStorage.getItem('auth_token') || localStorage.getItem('token')}`
+                    }
+                });
+                if (response.ok) {
+                    alert('Agent request rejected');
+                    loadAgentRequests();
+                } else {
+                    const err = await response.json().catch(()=>({message:'Unknown error'}));
+                    alert('Error: ' + (err.message || 'Failed to reject'));
+                }
+            } catch (e) {
+                alert('Network error');
+            }
+        }
+
+        async function loadPendingProperties() {
+            const loader = document.querySelector('#pending-section .loader');
+            const list = document.getElementById('pendingPropertiesList');
+            
+            loader.style.display = 'block';
+            list.innerHTML = '';
+
+            try {
+                const response = await fetch('http://localhost:5000/api/admin/properties/pending', {
+                    headers: {
+                        'Authorization': `Bearer ${localStorage.getItem('auth_token') || localStorage.getItem('token')}`
+                    }
+                });
+
+                if (response.ok) {
+                    const data = await response.json();
+                    loader.style.display = 'none';
+                    
+                    if (data.data.length === 0) {
+                        list.innerHTML = '<p class="text-center text-muted">No pending properties found.</p>';
+                        return;
+                    }
+
+                    data.data.forEach(property => {
+                        const propertyCard = createPropertyCard(property, true);
+                        list.appendChild(propertyCard);
+                    });
+                }
+            } catch (error) {
+                loader.style.display = 'none';
+                list.innerHTML = '<p class="text-center text-danger">Error loading pending properties.</p>';
+                console.error('Error:', error);
+            }
+        }
+
+        async function loadAllProperties() {
+            const loader = document.querySelector('#all-properties-section .loader');
+            const list = document.getElementById('allPropertiesList');
+            
+            loader.style.display = 'block';
+            list.innerHTML = '';
+
+            try {
+                const response = await fetch('http://localhost:5000/api/admin/properties', {
+                    headers: {
+                        'Authorization': `Bearer ${localStorage.getItem('auth_token') || localStorage.getItem('token')}`
+                    }
+                });
+
+                if (response.ok) {
+                    const data = await response.json();
+                    loader.style.display = 'none';
+                    
+                    if (data.data.length === 0) {
+                        list.innerHTML = '<p class="text-center text-muted">No properties found.</p>';
+                        return;
+                    }
+
+                    data.data.forEach(property => {
+                        const propertyCard = createPropertyCard(property, false, true);
+                        list.appendChild(propertyCard);
+                    });
+                }
+            } catch (error) {
+                loader.style.display = 'none';
+                list.innerHTML = '<p class="text-center text-danger">Error loading properties.</p>';
+                console.error('Error:', error);
+            }
+        }
+
+        async function loadUsers() {
+            const loader = document.querySelector('#users-section .loader');
+            const list = document.getElementById('usersList');
+            
+            loader.style.display = 'block';
+            list.innerHTML = '';
+
+            try {
+                const response = await fetch('http://localhost:5000/api/admin/users', {
+                    headers: {
+                        'Authorization': `Bearer ${localStorage.getItem('auth_token') || localStorage.getItem('token')}`
+                    }
+                });
+
+                if (response.ok) {
+                    const data = await response.json();
+                    loader.style.display = 'none';
+                    
+                    if (data.data.length === 0) {
+                        list.innerHTML = '<p class="text-center text-muted">No users found.</p>';
+                        return;
+                    }
+
+                    data.data.forEach(user => {
+                        const userCard = createUserCard(user);
+                        list.appendChild(userCard);
+                    });
+                }
+            } catch (error) {
+                loader.style.display = 'none';
+                list.innerHTML = '<p class="text-center text-danger">Error loading users.</p>';
+                console.error('Error:', error);
+            }
+        }
+
+        async function loadMessages() {
+            const loader = document.querySelector('#messages-section .loader');
+            const list = document.getElementById('messagesList');
+
+            loader.style.display = 'block';
+            list.innerHTML = '';
+
+            try {
+                const response = await fetch('http://localhost:5000/api/messages', {
+                    headers: {
+                        'Authorization': `Bearer ${localStorage.getItem('auth_token') || localStorage.getItem('token')}`
+                    }
+                });
+
+                if (response.ok) {
+                    const data = await response.json();
+                    loader.style.display = 'none';
+
+                    if (data.data.length === 0) {
+                        list.innerHTML = '<p class="text-center text-muted">No messages found.</p>';
+                        return;
+                    }
+
+                    data.data.forEach(message => {
+                        const messageCard = createMessageCard(message);
+                        list.appendChild(messageCard);
+                    });
+                }
+            } catch (error) {
+                loader.style.display = 'none';
+                list.innerHTML = '<p class="text-center text-danger">Error loading messages.</p>';
+                console.error('Error:', error);
+            }
+        }
+
+        function createMessageCard(message) {
+            const card = document.createElement('div');
+            card.className = 'card property-card mb-3';
+
+            const date = new Date(message.createdAt).toLocaleString();
+
+            card.innerHTML = `
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-8">
+                            <h5 class="card-title">${message.subject}</h5>
+                            <p class="card-text">
+                                <strong>From:</strong> ${message.name} (${message.email}) |
+                                <strong>Phone:</strong> ${message.phone}
+                            </p>
+                            <p class="card-text">
+                                <strong>Date:</strong> ${date}
+                            </p>
+                            <p class="card-text">
+                                <strong>Message:</strong>
+                            </p>
+                            <div class="alert alert-light">
+                                ${message.message}
+                            </div>
+                        </div>
+                        <div class="col-md-4 text-end">
+                            <div class="mt-2">
+                                <button class="btn btn-primary btn-action me-2" onclick="replyToMessage('${message.email}', '${message.name}')">
+                                    <i class="fas fa-reply"></i> Reply
+                                </button>
+                                <button class="btn btn-danger btn-action" onclick="deleteMessage('${message._id}')">
+                                    <i class="fas fa-trash"></i> Delete
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+
+            return card;
+        }
+
+        async function deleteMessage(messageId) {
+            if (!confirm('Are you sure you want to delete this message?')) {
+                return;
+            }
+
+            try {
+                const response = await fetch(`http://localhost:5000/api/messages/${messageId}`, {
+                    method: 'DELETE',
+                    headers: {
+                        'Authorization': `Bearer ${localStorage.getItem('auth_token') || localStorage.getItem('token')}`
+                    }
+                });
+
+                if (response.ok) {
+                    alert('Message deleted successfully!');
+                    loadMessages(); // Refresh the messages list
+                } else {
+                    const error = await response.json();
+                    alert('Error: ' + (error.message || 'Failed to delete message'));
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                alert('Error deleting message. Please try again.');
+            }
+        }
+
+        function replyToMessage(email, name) {
+            // Open default email client with pre-filled details
+            const subject = encodeURIComponent(`Re: ${name} - Contact Form Message`);
+            const body = encodeURIComponent(`Dear ${name},\n\nThank you for your message. We have received your inquiry and will get back to you soon.\n\nBest regards,\nForemost Real Estate Team`);
+            window.open(`mailto:${email}?subject=${subject}&body=${body}`);
+        }
+
+        function createPropertyCard(property, showActions = true, isAllPropertiesSection = false) {
+            const card = document.createElement('div');
+            card.className = 'card property-card mb-3';
+            
+            const statusClass = `status-${property.approvalStatus}`;
+            const statusText = property.approvalStatus.charAt(0).toUpperCase() + property.approvalStatus.slice(1);
+            
+            // Determine which buttons to show
+            let buttonsHtml = '';
+            if (showActions && property.approvalStatus === 'pending' && !isAllPropertiesSection) {
+                // Show view + approve/reject buttons for pending properties (only in pending section)
+                buttonsHtml = `
+                    <div class="mt-2">
+                        <button class="btn btn-primary btn-action me-2 mb-2" onclick="viewProperty('${property._id}')">
+                            <i class="fas fa-eye"></i> View
+                        </button>
+                        <br>
+                        <button class="btn btn-success btn-action me-2" onclick="approveProperty('${property._id}')">
+                            <i class="fas fa-check"></i> Approve
+                        </button>
+                        <button class="btn btn-danger btn-action" onclick="showRejectionModal('${property._id}')">
+                            <i class="fas fa-times"></i> Reject
+                        </button>
+                    </div>
+                `;
+            } else if (isAllPropertiesSection || (showActions && property.approvalStatus !== 'pending')) {
+                // Show view and delete buttons for all properties section or non-pending properties
+                buttonsHtml = `
+                    <div class="mt-2">
+                        <button class="btn btn-primary btn-action me-2" onclick="viewProperty('${property._id}')">
+                            <i class="fas fa-eye"></i> View
+                        </button>
+                        <button class="btn btn-danger btn-action" onclick="deleteProperty('${property._id}', '${property.title}')">
+                            <i class="fas fa-trash"></i> Delete
+                        </button>
+                    </div>
+                `;
+            }
+            
+            card.innerHTML = `
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-8">
+                            <h5 class="card-title">${property.title}</h5>
+                            <p class="card-text">
+                                <strong>Type:</strong> ${property.type} | 
+                                <strong>Price:</strong> ₹${property.price.toLocaleString()} | 
+                                <strong>Location:</strong> ${property.location.city}, ${property.location.state}
+                            </p>
+                            <p class="card-text">
+                                <strong>Owner:</strong> ${property.owner.name} (${property.owner.email}) | 
+                                <strong>Submitted:</strong> ${new Date(property.createdAt).toLocaleDateString()}
+                            </p>
+                            ${property.rejectionReason ? `<p class="card-text text-danger"><strong>Rejection Reason:</strong> ${property.rejectionReason}</p>` : ''}
+                        </div>
+                        <div class="col-md-4 text-end">
+                            <span class="status-badge ${statusClass}">${statusText}</span>
+                            ${buttonsHtml}
+                        </div>
+                    </div>
+                </div>
+            `;
+            
+            return card;
+        }
+
+        function createUserCard(user) {
+            const card = document.createElement('div');
+            card.className = 'card property-card mb-3';
+            
+            card.innerHTML = `
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-8">
+                            <h5 class="card-title">${user.name}</h5>
+                            <p class="card-text">
+                                <strong>Email:</strong> ${user.email} | 
+                                <strong>Phone:</strong> ${user.phone} | 
+                                <strong>Role:</strong> ${user.role}
+                            </p>
+                            <p class="card-text">
+                                <strong>Joined:</strong> ${new Date(user.createdAt).toLocaleDateString()} | 
+                                <strong>Status:</strong> ${user.isActive ? 'Active' : 'Inactive'}
+                            </p>
+                        </div>
+                        <div class="col-md-4 text-end">
+                            <div class="mt-2">
+                                <button class="btn btn-${user.isActive ? 'warning' : 'success'} btn-action me-2" 
+                                        onclick="toggleUserStatus('${user._id}', ${user.isActive})">
+                                    <i class="fas fa-${user.isActive ? 'ban' : 'check'}"></i> 
+                                    ${user.isActive ? 'Deactivate' : 'Activate'}
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+            
+            return card;
+        }
+
+        async function approveProperty(propertyId) {
+            if (!confirm('Are you sure you want to approve this property?')) return;
+
+            try {
+                const response = await fetch(`http://localhost:5000/api/admin/properties/${propertyId}/approve`, {
+                    method: 'PUT',
+                    headers: {
+                        'Authorization': `Bearer ${localStorage.getItem('auth_token') || localStorage.getItem('token')}`,
+                        'Content-Type': 'application/json'
+                    }
+                });
+
+                if (response.ok) {
+                    alert('Property approved successfully!');
+                    loadPendingProperties();
+                    loadDashboard();
+                } else {
+                    const error = await response.json();
+                    alert('Error: ' + error.message);
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                alert('Error approving property.');
+            }
+        }
+
+        function showRejectionModal(propertyId) {
+            currentPropertyId = propertyId;
+            document.getElementById('rejectionReason').value = '';
+            modal.show();
+        }
+
+        async function confirmRejection() {
+            const reason = document.getElementById('rejectionReason').value.trim();
+            if (!reason) {
+                alert('Please provide a rejection reason.');
+                return;
+            }
+
+            try {
+                const response = await fetch(`http://localhost:5000/api/admin/properties/${currentPropertyId}/reject`, {
+                    method: 'PUT',
+                    headers: {
+                        'Authorization': `Bearer ${localStorage.getItem('auth_token') || localStorage.getItem('token')}`,
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ rejectionReason: reason })
+                });
+
+                if (response.ok) {
+                    alert('Property rejected successfully!');
+                    modal.hide();
+                    loadPendingProperties();
+                    loadDashboard();
+                } else {
+                    const error = await response.json();
+                    alert('Error: ' + error.message);
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                alert('Error rejecting property.');
+            }
+        }
+
+        async function toggleUserStatus(userId, currentStatus) {
+            const action = currentStatus ? 'deactivate' : 'activate';
+            if (!confirm(`Are you sure you want to ${action} this user?`)) return;
+
+            try {
+                const response = await fetch(`http://localhost:5000/api/admin/users/${userId}/status`, {
+                    method: 'PUT',
+                    headers: {
+                        'Authorization': `Bearer ${localStorage.getItem('auth_token') || localStorage.getItem('token')}`,
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ isActive: !currentStatus })
+                });
+
+                if (response.ok) {
+                    alert(`User ${action}d successfully!`);
+                    loadUsers();
+                } else {
+                    const error = await response.json();
+                    alert('Error: ' + error.message);
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                alert('Error updating user status.');
+            }
+        }
+
+        function refreshData() {
+            const activeSection = document.querySelector('.nav-link.active').getAttribute('onclick');
+            if (activeSection) {
+                eval(activeSection);
+            }
+        }
+
+        function viewProperty(propertyId) {
+            // Open property details page in a new tab/window
+            window.open(`properties-details.html?id=${propertyId}`, '_blank');
+        }
+
+        async function deleteProperty(propertyId, propertyTitle) {
+            if (!confirm(`Are you sure you want to delete the property "${propertyTitle}"? This action cannot be undone.`)) {
+                return;
+            }
+
+            try {
+                const response = await fetch(`http://localhost:5000/api/admin/properties/${propertyId}`, {
+                    method: 'DELETE',
+                    headers: {
+                        'Authorization': `Bearer ${localStorage.getItem('auth_token') || localStorage.getItem('token')}`,
+                        'Content-Type': 'application/json'
+                    }
+                });
+
+                if (response.ok) {
+                    alert('Property deleted successfully!');
+                    loadAllProperties(); // Refresh the all properties list
+                    loadDashboard(); // Update dashboard stats
+                } else {
+                    const error = await response.json();
+                    alert('Error: ' + (error.message || 'Failed to delete property'));
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                alert('Error deleting property. Please try again.');
+            }
+        }
+
+        function logout() {
+            if (confirm('Are you sure you want to logout?')) {
+                localStorage.removeItem('auth_token');
+                localStorage.removeItem('token');
+                localStorage.removeItem('current_user');
+                window.location.href = 'login.html';
+            }
+        }
+    </script>
+</body>
+</html>
